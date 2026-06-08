@@ -19,20 +19,21 @@ import { useProgress } from "../context/ProgressContext";
 import TestScoreboard from "../components/Test/TestScoreboard";
 import TestActions from "../components/Test/TestActions";
 import "./Test.css";
+import gestureModel from "../assests/sign_language_recognizer_25-04-2023.task";
 
 let startTime = "";
 
 const Test = ({ onRecognize }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Refs
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const requestRef = useRef();
   const ttsUtteranceRef = useRef(null);
   const gestureOutputRef = useRef("");
-  
+
   // Timer refs (using refs to avoid re-renders)
   const timerStartedRef = useRef(false);
   const startTimeRef = useRef(null);
@@ -51,7 +52,7 @@ const Test = ({ onRecognize }) => {
   // Core state
   const [practiceStarted, setPracticeStarted] = useState(false); // Track if practice has started
   const [webcamRunning, setWebcamRunning] = useState(false);
-  
+
   // Reset to instructions screen when navigating from sidebar
   useEffect(() => {
     if (location.state?.showInstructions) {
@@ -62,7 +63,7 @@ const Test = ({ onRecognize }) => {
   }, [location.state]);
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
   const [runningMode, setRunningMode] = useState("IMAGE");
-  
+
   // Detection state
   const [gestureOutput, setGestureOutput] = useState("");
   const [confidence, setConfidence] = useState(0);
@@ -90,7 +91,7 @@ const Test = ({ onRecognize }) => {
   const user = useSelector((state) => state.auth?.user);
   const { accessToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  
+
   // Progress tracking
   const { updatePracticeProgress } = useProgress();
 
@@ -116,8 +117,8 @@ const Test = ({ onRecognize }) => {
   }, [accessToken, googleLogin]);
 
   // Get current sign from randomSigns array (for Test page)
-  const currentImage = randomSigns.length > 0 && currentRandomSignIndex < randomSigns.length 
-    ? randomSigns[currentRandomSignIndex] 
+  const currentImage = randomSigns.length > 0 && currentRandomSignIndex < randomSigns.length
+    ? randomSigns[currentRandomSignIndex]
     : null;
 
   /**
@@ -141,7 +142,7 @@ const Test = ({ onRecognize }) => {
 
     // Cancel any ongoing speech to prevent overlapping
     window.speechSynthesis.cancel();
-    
+
     // Wait for speechSynthesis to be ready (handle pending state)
     const speakWithRetry = (attempt = 0) => {
       // Check if speechSynthesis is speaking or pending
@@ -157,7 +158,7 @@ const Test = ({ onRecognize }) => {
       }
 
       let textToSpeak = text.trim();
-      
+
       // Handle single letters - add "letter" prefix for better pronunciation
       // Check if it's a single uppercase letter (A-Z)
       if (textToSpeak.length === 1 && /^[A-Z]$/.test(textToSpeak)) {
@@ -188,19 +189,19 @@ const Test = ({ onRecognize }) => {
         utterance.onend = () => {
           console.log('TTS ended successfully:', textToSpeak);
           ttsUtteranceRef.current = null;
-          
+
           // Track TTS completion - mark sign as correct when TTS finishes
           // Check if sign matches and confidence is good, then mark as correct
           const currentSignName = currentImageNameRef.current?.toUpperCase();
           const detectedSignName = gestureOutputRef.current?.toUpperCase();
           const currentConfidence = confidenceRef.current || 0;
-          
+
           // If TTS completed and sign matches with good confidence, mark as correct
           // This allows TTS completion to also mark the sign as correct (alternative to 3-second timer)
-          if (currentSignName && detectedSignName && 
-              detectedSignName === currentSignName && 
-              currentConfidence >= 50 && 
-              !isCompletedRef.current) {
+          if (currentSignName && detectedSignName &&
+            detectedSignName === currentSignName &&
+            currentConfidence >= 50 &&
+            !isCompletedRef.current) {
             console.log('TTS completed - marking sign as correct:', textToSpeak);
             // Use setTimeout to defer execution and ensure functions are available
             setTimeout(() => {
@@ -230,7 +231,7 @@ const Test = ({ onRecognize }) => {
         utterance.onerror = (event) => {
           console.error('TTS error:', event.error, 'for text:', textToSpeak);
           ttsUtteranceRef.current = null;
-          
+
           // Retry once on error (except for cancelled errors)
           if (event.error !== 'canceled' && attempt === 0) {
             console.log('TTS: Retrying after error...');
@@ -239,11 +240,11 @@ const Test = ({ onRecognize }) => {
         };
 
         ttsUtteranceRef.current = utterance;
-        
+
         // Ensure speechSynthesis is ready before speaking
         if (window.speechSynthesis.speaking) {
           window.speechSynthesis.cancel();
-      setTimeout(() => {
+          setTimeout(() => {
             window.speechSynthesis.speak(utterance);
             console.log('TTS speak() called (after cancel):', textToSpeak);
           }, 100);
@@ -274,19 +275,19 @@ const Test = ({ onRecognize }) => {
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
-      
+
       oscillator.connect(gainNode);
       gainNode.connect(audioContext.destination);
-      
+
       // Configure beep sound (short, high-pitched beep)
       oscillator.frequency.value = 800; // Frequency in Hz
       oscillator.type = 'sine';
-      
+
       // Set volume envelope (quick fade in/out)
       gainNode.gain.setValueAtTime(0, audioContext.currentTime);
       gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
       gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.15);
-      
+
       // Play beep for 150ms
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.15);
@@ -296,7 +297,7 @@ const Test = ({ onRecognize }) => {
       try {
         const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OSdTgwOUKjk8LZjHAY4kdfyzHksBSR3x/DdkEAKFF606euoVRQKRp/g8r5sIQUqgc7y2Yk2CBtpvfDknU4MDlCo5PC2YxwGOJHX8sx5LAUkd8fw3ZBAC');
         audio.volume = 0.3;
-        audio.play().catch(() => {});
+        audio.play().catch(() => { });
       } catch (e) {
         console.warn('Fallback beep sound also failed:', e);
       }
@@ -331,10 +332,10 @@ const Test = ({ onRecognize }) => {
    */
   const calculateAndShowResults = useCallback(() => {
     if (randomSigns.length === 0) return;
-    
+
     // Ensure we have exactly 10 signs
     const signsToProcess = randomSigns.length >= 10 ? randomSigns.slice(0, 10) : randomSigns;
-    
+
     // Calculate total time for all signs
     let totalTime = 0;
     signsToProcess.forEach((sign, index) => {
@@ -347,14 +348,14 @@ const Test = ({ onRecognize }) => {
         totalTime += 10;
       }
     });
-    
+
     // Calculate results for each sign - ensure all 10 are included
     const results = signsToProcess.map((sign, index) => {
       const isCompleted = completedSigns.has(index); // Green box = completed
       const isFailed = failedSigns.has(index); // Red box = failed
-      
+
       let accuracy = 0;
-      
+
       // If sign was completed, calculate average confidence during 3-second period
       if (isCompleted) {
         const confidenceValues = confidenceValuesForSign[index] || [];
@@ -374,12 +375,12 @@ const Test = ({ onRecognize }) => {
         // If failed, use max confidence achieved
         accuracy = maxConfidenceForSign[index] || 0;
       }
-      
+
       // Round accuracy to nearest integer
       accuracy = Math.round(accuracy);
-      
+
       let result = "Incorrect";
-      
+
       // If sign is completed (green box), show as Correct
       if (isCompleted) {
         result = "Correct";
@@ -388,7 +389,7 @@ const Test = ({ onRecognize }) => {
       } else {
         result = "Incorrect";
       }
-      
+
       return {
         sign: sign.name,
         accuracy: accuracy,
@@ -396,7 +397,7 @@ const Test = ({ onRecognize }) => {
         point: isCompleted ? 1 : 0 // 1 point if completed (green box)
       };
     });
-    
+
     // Ensure we have exactly 10 results (pad with empty if needed)
     while (results.length < 10) {
       results.push({
@@ -406,22 +407,22 @@ const Test = ({ onRecognize }) => {
         point: 0
       });
     }
-    
+
     setSignResults(results);
     setTestCompleted(true);
-          setWebcamRunning(false);
-    
+    setWebcamRunning(false);
+
     // Cancel animation frame
-          if (requestRef.current) {
-            cancelAnimationFrame(requestRef.current);
-          }
-    
+    if (requestRef.current) {
+      cancelAnimationFrame(requestRef.current);
+    }
+
     // Clear interval timer
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    
+
     // Clear 10-second timer
     if (timerIntervalRef.current) {
       clearInterval(timerIntervalRef.current);
@@ -459,9 +460,9 @@ const Test = ({ onRecognize }) => {
 
     // Reset all states
     setCountdownNumber(null);
-      setGestureOutput("");
+    setGestureOutput("");
     gestureOutputRef.current = "";
-      setConfidence(0);
+    setConfidence(0);
     setTimerSeconds(10); // Reset 10-second timer
   }, []);
 
@@ -473,22 +474,22 @@ const Test = ({ onRecognize }) => {
    */
   const handlePreviousSign = useCallback(() => {
     console.log('Previous sign clicked');
-    
+
     // Reset all timers and states
     resetAllTimers();
-    
+
     // Reset completion state for new sign
     setIsCompleted(false);
     isCompletedRef.current = false;
-    
+
     // Reset manual selection flag
     setIsManualSelection(false);
-    
+
     // Reset detection states
     setConfidence(0);
-      setGestureOutput("");
+    setGestureOutput("");
     gestureOutputRef.current = "";
-    
+
     setCurrentImageIndex((prevIndex) => {
       const prevIndex_new = prevIndex === 0 ? SignImageData.length - 1 : prevIndex - 1;
       const prevImage = SignImageData[prevIndex_new];
@@ -505,22 +506,22 @@ const Test = ({ onRecognize }) => {
    */
   const handleNextSign = useCallback(() => {
     console.log('Next sign clicked');
-    
+
     // Reset all timers and states
     resetAllTimers();
-    
+
     // Reset completion state for new sign
     setIsCompleted(false);
     isCompletedRef.current = false;
-    
+
     // Reset manual selection flag
     setIsManualSelection(false);
-    
+
     // Reset detection states
-      setConfidence(0);
+    setConfidence(0);
     setGestureOutput("");
     gestureOutputRef.current = "";
-    
+
     setCurrentImageIndex((prevIndex) => {
       const nextIndex = (prevIndex + 1) % SignImageData.length;
       const nextImage = SignImageData[nextIndex];
@@ -537,7 +538,7 @@ const Test = ({ onRecognize }) => {
    */
   const handleManualSignSelection = useCallback((selectedIndex) => {
     console.log('Manual sign selection - index:', selectedIndex, 'sign:', SignImageData[selectedIndex]?.name);
-    
+
     // Reset all timers and states
     resetAllTimers();
 
@@ -566,36 +567,36 @@ const Test = ({ onRecognize }) => {
    */
   const markSignCompleted = useCallback(() => {
     console.log('Sign completed - locking detection');
-    
+
     // Clear countdown immediately
     setCountdownNumber(null);
-    
+
     // Clear confidence and gesture output to hide them from UI
     setConfidence(0);
     setGestureOutput("");
     gestureOutputRef.current = "";
-    
+
     // Mark as completed (locks detection)
     setIsCompleted(true);
     isCompletedRef.current = true; // Update ref immediately
-    
+
     // Clear interval if still running
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    
+
     // Reset timer refs
     timerStartedRef.current = false;
     startTimeRef.current = null;
     hasSpokenRef.current = false;
-    
+
     // NOTE: We do NOT cancel TTS here - let it complete naturally
     // This ensures the speech finishes even after sign completion
-    
+
     console.log('Sign completion locked - Repeat button will appear');
   }, []);
-  
+
   // Store markSignCompleted in ref
   useEffect(() => {
     markSignCompletedRef.current = markSignCompleted;
@@ -607,37 +608,37 @@ const Test = ({ onRecognize }) => {
    */
   const moveToNextSign = useCallback(() => {
     console.log('moveToNextSign called - immediately advancing to next sign');
-    
+
     // Cancel any existing auto-advance timeout
     if (autoAdvanceTimeoutRef.current) {
       clearTimeout(autoAdvanceTimeoutRef.current);
       autoAdvanceTimeoutRef.current = null;
     }
-    
+
     // Clear 10-second timer
     if (timerIntervalRef.current) {
       clearInterval(timerIntervalRef.current);
       timerIntervalRef.current = null;
     }
-    
+
     // Mark as completed
     markSignCompleted();
-    
+
     // Immediately move to next sign
     // Reset all timers and states
     resetAllTimers();
-    
+
     // CRITICAL: Clear confidence and gesture output BEFORE moving to next sign
     // This ensures the timer doesn't start immediately with old detection data
     setConfidence(0);
     setGestureOutput("");
     gestureOutputRef.current = "";
     confidenceRef.current = 0;
-    
+
     // Reset completion state for next sign
     setIsCompleted(false);
     isCompletedRef.current = false; // Update ref
-    
+
     // Reset manual selection flag so next sign can also auto-advance
     setIsManualSelection(false);
 
@@ -650,10 +651,10 @@ const Test = ({ onRecognize }) => {
         console.log('Marking sign as completed:', prevIndex, 'completed signs:', Array.from(newSet));
         return newSet;
       });
-      
+
       if (randomSigns.length === 0) return prevIndex;
       const nextIndex = (prevIndex + 1) % randomSigns.length;
-      
+
       // Check if we've completed all 10 signs (moved from index 9 to 0)
       if (nextIndex === 0 && prevIndex === randomSigns.length - 1 && randomSigns.length === 10) {
         // All 10 signs completed - show completion page
@@ -664,22 +665,22 @@ const Test = ({ onRecognize }) => {
         }, 100);
         return 0;
       }
-      
+
       const nextSign = randomSigns[nextIndex];
       console.log('Auto-advancing to next sign:', nextSign?.name, 'at index:', nextIndex);
       // Update ref immediately - MUST be done before timer logic checks
       currentImageNameRef.current = nextSign?.name?.toUpperCase() || null;
-      
+
       // Track the sign transition time and previous sign to prevent immediate timer start
       signTransitionTimeRef.current = Date.now();
       if (randomSigns[prevIndex]) {
         lastCompletedSignRef.current = randomSigns[prevIndex].name.toUpperCase();
       }
-      
+
       return nextIndex;
     });
   }, [resetAllTimers, markSignCompleted, randomSigns, calculateAndShowResults]);
-  
+
   // Store moveToNextSign in ref
   useEffect(() => {
     moveToNextSignRef.current = moveToNextSign;
@@ -715,7 +716,7 @@ const Test = ({ onRecognize }) => {
     // Start timer only when webcam is running and sign is not completed
     if (webcamRunning && !isCompleted) {
       setTimerSeconds(10); // Reset to 10 seconds
-      
+
       // Track start time for current sign when timer starts
       setSignStartTime((prev) => {
         const newTimes = { ...prev };
@@ -724,7 +725,7 @@ const Test = ({ onRecognize }) => {
         }
         return newTimes;
       });
-      
+
       timerIntervalRef.current = setInterval(() => {
         setTimerSeconds((prev) => {
           if (prev <= 1) {
@@ -754,14 +755,14 @@ const Test = ({ onRecognize }) => {
   useEffect(() => {
     if (timerSeconds === 0 && webcamRunning && !isCompleted) {
       console.log('10-second timer reached 0 - sign failed, marking as red');
-      
+
       // Play beep sound when sign times out (user failed to complete)
       playBeepSound();
-      
+
       // Mark current sign as failed (red) - but keep the accuracy tracked
       const failedIndex = currentRandomSignIndex;
       const currentConfidence = confidenceRef.current || 0;
-      
+
       // Track start time if not already tracked (when webcam started for this sign)
       setSignStartTime((prev) => {
         const newTimes = { ...prev };
@@ -771,7 +772,7 @@ const Test = ({ onRecognize }) => {
         }
         return newTimes;
       });
-      
+
       // Track end time for failed sign (10 seconds after start)
       setSignEndTime((prev) => {
         const newTimes = { ...prev };
@@ -779,13 +780,13 @@ const Test = ({ onRecognize }) => {
         newTimes[failedIndex] = startTime + 10000; // 10 seconds after start
         return newTimes;
       });
-      
+
       setFailedSigns((prev) => {
         const newSet = new Set(prev);
         newSet.add(failedIndex);
         return newSet;
       });
-      
+
       // Ensure we have accuracy recorded for failed sign (use current confidence if available)
       setMaxConfidenceForSign((prev) => {
         const newMax = { ...prev };
@@ -794,16 +795,16 @@ const Test = ({ onRecognize }) => {
         }
         return newMax;
       });
-      
+
       setIsCompleted(false);
       isCompletedRef.current = false;
       resetAllTimers();
       setIsManualSelection(false);
-      
+
       setCurrentRandomSignIndex((prevIndex) => {
         if (randomSigns.length === 0) return prevIndex;
         const nextIndex = (prevIndex + 1) % randomSigns.length;
-        
+
         // Check if we've completed all 10 signs (moved from index 9 to 0)
         if (nextIndex === 0 && prevIndex === randomSigns.length - 1 && randomSigns.length === 10) {
           // All 10 signs completed - show completion page
@@ -813,7 +814,7 @@ const Test = ({ onRecognize }) => {
           }, 100);
           return 0;
         }
-        
+
         const nextSign = randomSigns[nextIndex];
         console.log('Moving to next sign (timeout):', nextSign?.name, 'at index:', nextIndex);
         currentImageNameRef.current = nextSign?.name?.toUpperCase() || null;
@@ -884,20 +885,20 @@ const Test = ({ onRecognize }) => {
     // 5. Sign is NOT completed
     // 6. At least 500ms has passed since moving to this sign (prevents immediate start with stale data)
     // 7. Detected sign is different from the last completed sign (ensures it's a new detection)
-    const timeSinceTransition = signTransitionTimeRef.current 
-      ? Date.now() - signTransitionTimeRef.current 
+    const timeSinceTransition = signTransitionTimeRef.current
+      ? Date.now() - signTransitionTimeRef.current
       : 1000; // If no transition time, allow (first sign)
-    const isNewSignDetection = !lastCompletedSignRef.current || 
-                                gestureOutput?.toUpperCase() !== lastCompletedSignRef.current;
-    
-    if (confidence >= 50 && 
-        !timerStartedRef.current && 
-        webcamRunning && 
-        gestureOutput && 
-        signMatches && 
-        !isCompleted &&
-        timeSinceTransition >= 500 && // Wait at least 500ms after sign transition
-        isNewSignDetection) { // Ensure it's detecting a different sign than the last completed one
+    const isNewSignDetection = !lastCompletedSignRef.current ||
+      gestureOutput?.toUpperCase() !== lastCompletedSignRef.current;
+
+    if (confidence >= 50 &&
+      !timerStartedRef.current &&
+      webcamRunning &&
+      gestureOutput &&
+      signMatches &&
+      !isCompleted &&
+      timeSinceTransition >= 500 && // Wait at least 500ms after sign transition
+      isNewSignDetection) { // Ensure it's detecting a different sign than the last completed one
       console.log('Timer starting - confidence:', confidence, 'sign:', gestureOutput, 'currentImage:', currentImage?.name, 'currentImageNameRef:', currentImageNameRef.current, 'timeSinceTransition:', timeSinceTransition);
       timerStartedRef.current = true;
       startTimeRef.current = Date.now();
@@ -995,14 +996,14 @@ const Test = ({ onRecognize }) => {
         // At 3 seconds: Complete the sign
         if (elapsedSeconds >= 3.0) {
           console.log('Timer complete at 3 seconds - marking sign as completed');
-          
+
           // Track end time for current sign
           setSignEndTime((prev) => {
             const newTimes = { ...prev };
             newTimes[currentRandomSignIndex] = Date.now();
             return newTimes;
           });
-          
+
           // Clear the interval
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
@@ -1026,7 +1027,7 @@ const Test = ({ onRecognize }) => {
       const currentSignName = currentImageNameRef.current || currentImage?.name?.toUpperCase();
       const detectedSignName = gestureOutput?.toUpperCase();
       const signMatches = currentSignName && detectedSignName && detectedSignName === currentSignName;
-      
+
       if (!signMatches && gestureOutput) {
         // Sign doesn't match - reset timer
         console.log('Sign mismatch in timer useEffect - resetting. Current:', currentSignName, 'Detected:', detectedSignName);
@@ -1164,8 +1165,8 @@ const Test = ({ onRecognize }) => {
 
       // Only process if sign matches current image AND sign is not completed
       if (currentSignName && detectedSignName && detectedSignName === currentSignName && !isCompleted) {
-      setGestureOutput(recognizedText);
-      setConfidence(confidenceScore);
+        setGestureOutput(recognizedText);
+        setConfidence(confidenceScore);
 
         // Track max confidence for current sign
         setMaxConfidenceForSign((prev) => {
@@ -1178,19 +1179,19 @@ const Test = ({ onRecognize }) => {
         });
 
         // Track detection data for analytics
-      setDetectedData((prevData) => [
-        ...prevData,
-        {
-          SignDetected: recognizedText,
+        setDetectedData((prevData) => [
+          ...prevData,
+          {
+            SignDetected: recognizedText,
             confidence: confidenceScore,
-        },
-      ]);
-      
-      // Call onRecognize callback if provided
-      if (onRecognize && typeof onRecognize === 'function') {
-        onRecognize(recognizedText);
-      }
-    } else {
+          },
+        ]);
+
+        // Call onRecognize callback if provided
+        if (onRecognize && typeof onRecognize === 'function') {
+          onRecognize(recognizedText);
+        }
+      } else {
         // Sign doesn't match - reset everything including timer
         // Only reset if we have a detected sign (to avoid resetting on empty detection)
         if (detectedSignName && currentSignName) {
@@ -1198,7 +1199,7 @@ const Test = ({ onRecognize }) => {
         }
         setGestureOutput("");
         setConfidence(0);
-        
+
         // Reset timer if it was running (wrong sign detected)
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
@@ -1213,7 +1214,7 @@ const Test = ({ onRecognize }) => {
       // No gesture detected - reset everything
       setGestureOutput("");
       setConfidence(0);
-      
+
       // Reset timer if it was running
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -1295,9 +1296,9 @@ const Test = ({ onRecognize }) => {
       // Safety check: ensure startTime is a Date object before calling getTime()
       const timeElapsed = startTime && startTime instanceof Date
         ? (
-        (endTime.getTime() - startTime.getTime()) /
-        1000
-          ).toFixed(2)
+          (endTime.getTime() - startTime.getTime()) /
+          1000
+        ).toFixed(2)
         : "0.00";
 
       const nonEmptyData = detectedData.filter(
@@ -1305,10 +1306,10 @@ const Test = ({ onRecognize }) => {
       );
 
       if (nonEmptyData.length > 0) {
-      const resultArray = [];
-      let current = nonEmptyData[0];
+        const resultArray = [];
+        let current = nonEmptyData[0];
 
-      for (let i = 1; i < nonEmptyData.length; i++) {
+        for (let i = 1; i < nonEmptyData.length; i++) {
           if (
             nonEmptyData[i] &&
             nonEmptyData[i].SignDetected &&
@@ -1316,89 +1317,89 @@ const Test = ({ onRecognize }) => {
             current.SignDetected &&
             nonEmptyData[i].SignDetected !== current.SignDetected
           ) {
+            resultArray.push(current);
+            current = nonEmptyData[i];
+          }
+        }
+
+        if (current && current.SignDetected) {
           resultArray.push(current);
-          current = nonEmptyData[i];
         }
-      }
 
-      if (current && current.SignDetected) {
-        resultArray.push(current);
-      }
-
-      const countMap = new Map();
-      for (const item of resultArray) {
-        if (item && item.SignDetected) {
-          const count = countMap.get(item.SignDetected) || 0;
-          countMap.set(item.SignDetected, count + 1);
+        const countMap = new Map();
+        for (const item of resultArray) {
+          if (item && item.SignDetected) {
+            const count = countMap.get(item.SignDetected) || 0;
+            countMap.set(item.SignDetected, count + 1);
+          }
         }
-      }
 
-      const sortedArray = Array.from(countMap.entries()).sort(
-        (a, b) => b[1] - a[1]
-      );
-
-      const outputArray = sortedArray
-        .slice(0, 5)
-        .map(([sign, count]) => ({ SignDetected: sign, count }));
-
-      const data = {
-        signsPerformed: outputArray,
-        id: uuidv4(),
-        username: user?.name,
-        userId: user?.userId,
-        createdAt: String(endTime),
-        secondsSpent: Number(timeElapsed),
-      };
-
-      if (outputArray.length > 0 && user?.userId) {
-        dispatch(addSignData(data));
-        
-        // Update progress tracking - count total signs practiced in this session
-        const totalSignsInSession = outputArray.reduce(
-          (sum, sign) => sum + (sign.count || 0),
-          0
+        const sortedArray = Array.from(countMap.entries()).sort(
+          (a, b) => b[1] - a[1]
         );
-        updatePracticeProgress(totalSignsInSession);
+
+        const outputArray = sortedArray
+          .slice(0, 5)
+          .map(([sign, count]) => ({ SignDetected: sign, count }));
+
+        const data = {
+          signsPerformed: outputArray,
+          id: uuidv4(),
+          username: user?.name,
+          userId: user?.userId,
+          createdAt: String(endTime),
+          secondsSpent: Number(timeElapsed),
+        };
+
+        if (outputArray.length > 0 && user?.userId) {
+          dispatch(addSignData(data));
+
+          // Update progress tracking - count total signs practiced in this session
+          const totalSignsInSession = outputArray.reduce(
+            (sum, sign) => sum + (sign.count || 0),
+            0
+          );
+          updatePracticeProgress(totalSignsInSession);
         }
       }
 
       setDetectedData([]);
-      
+
       // Generate new random signs when stopping
       generateRandomSigns();
     } else {
       // Start camera
-    setWebcamRunning(true);
+      setWebcamRunning(true);
       startTime = new Date();
-      
+
       // Play beep sound when test starts
       playBeepSound();
-      
+
       // Don't regenerate signs on start - keep the same signs
       // If no signs exist, generate them (first time only)
       if (randomSigns.length === 0) {
         generateRandomSigns();
-        } else {
+      } else {
         // Reset to first sign if signs already exist
         setCurrentRandomSignIndex(0);
         if (randomSigns.length > 0) {
           currentImageNameRef.current = randomSigns[0]?.name?.toUpperCase() || null;
         }
       }
-      
+
       // Reset all timer refs
       timerStartedRef.current = false;
       startTimeRef.current = null;
       hasSpokenRef.current = false;
       setCountdownNumber(null);
-      
+
       // Reset manual selection flag to enable auto-advance
       setIsManualSelection(false);
-      
+
       // Reset completion state when starting
       setIsCompleted(false);
       isCompletedRef.current = false; // Update ref
-      
+
       // Start animation loop - ensure it starts
       requestRef.current = requestAnimationFrame(animate);
     }
@@ -1423,14 +1424,10 @@ const Test = ({ onRecognize }) => {
         const vision = await FilesetResolver.forVisionTasks(
           "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
         );
-        
-        const modelPath =
-          process.env.REACT_APP_MODEL_PATH ||
-          "/sign_language_recognizer_25-04-2023.task";
-        
+
         const recognizer = await GestureRecognizer.createFromOptions(vision, {
           baseOptions: {
-            modelAssetPath: modelPath,
+            modelAssetPath: gestureModel,
           },
           numHands: 2,
           runningMode: runningMode,
@@ -1471,7 +1468,7 @@ const Test = ({ onRecognize }) => {
     process.env.NODE_ENV === "development" ||
     process.env.NODE_ENV === "production"
   ) {
-    console.log = function () {};
+    console.log = function () { };
   }
 
   // Handle Start Practice button click
@@ -1484,7 +1481,7 @@ const Test = ({ onRecognize }) => {
   if (testCompleted && signResults.length > 0) {
     const correctCount = signResults.filter(r => r.point === 1).length;
     const totalSigns = signResults.length;
-    
+
     // Determine score category for color coding
     let scoreCategory = 'low'; // red
     if (correctCount >= 7) {
@@ -1492,11 +1489,11 @@ const Test = ({ onRecognize }) => {
     } else if (correctCount >= 5) {
       scoreCategory = 'medium'; // yellow
     }
-    
+
     // Calculate overall accuracy
     const totalAccuracy = signResults.reduce((sum, r) => sum + r.accuracy, 0);
     const overallAccuracy = Math.round(totalAccuracy / totalSigns);
-    
+
     // Calculate time per sign - total time for all signs divided by number of signs
     let totalTime = 0;
     let signCount = 0;
@@ -1513,13 +1510,13 @@ const Test = ({ onRecognize }) => {
       }
     });
     const timePerSign = signCount > 0 ? `${(totalTime / signCount).toFixed(1)}s` : "10s";
-    
+
     // Get strongest signs (highest accuracy, at least 50%)
     const strongestSigns = [...signResults]
       .filter(r => r.accuracy >= 50)
       .sort((a, b) => b.accuracy - a.accuracy)
       .map(r => r.sign);
-    
+
     // Get signs that need practice (lowest accuracy or incorrect)
     const needsPracticeSigns = [...signResults]
       .filter(r => r.accuracy < 50 || r.result === "Incorrect")
@@ -1557,10 +1554,10 @@ const Test = ({ onRecognize }) => {
                   <span className="test-performance-label">Correct Signs:</span>
                   <span className="test-performance-value">{correctCount}</span>
                 </div>
-              <div className="test-performance-item">
-                <span className="test-performance-label">Time per Sign:</span>
-                <span className="test-performance-value">{timePerSign}</span>
-              </div>
+                <div className="test-performance-item">
+                  <span className="test-performance-label">Time per Sign:</span>
+                  <span className="test-performance-value">{timePerSign}</span>
+                </div>
                 {strongestSigns.length > 0 && (
                   <div className="test-performance-item">
                     <span className="test-performance-label">Strongest Signs:</span>
@@ -1608,21 +1605,21 @@ const Test = ({ onRecognize }) => {
               <li>View your results and performance summary at the end</li>
               <li>Click "Start Test" to begin the test</li>
             </ul>
-            </div>
+          </div>
           <div className="test-start-buttons">
-          <button
+            <button
               className="test-button primary"
               onClick={handleStartPractice}
             >
               Start Test
-                </button>
-              </div>
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
-    return (
+  return (
     <>
       <div className="signlang_detection-container">
         {accessToken ? (
@@ -1639,145 +1636,145 @@ const Test = ({ onRecognize }) => {
                       const isFailed = failedSigns.has(index);
                       return (
                         <div
-                    key={`${sign.name}-${index}`}
+                          key={`${sign.name}-${index}`}
                           className={`test-sign-practice-box ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''} ${isFailed ? 'failed' : ''} ${!isCompleted && !isFailed ? 'incomplete' : ''}`}
                         >
                           <div className="test-sign-practice-number">{index + 1}</div>
                           <div className="test-sign-practice-name">{sign.name}</div>
-              </div>
+                        </div>
                       );
                     })}
-            </div>
-        </div>
+                  </div>
+                </div>
               )}
 
-        <div style={{ position: "relative" }}>
-          <Webcam
-            audio={false}
-            ref={webcamRef}
-            className="signlang_webcam"
-          />
+              <div style={{ position: "relative" }}>
+                <Webcam
+                  audio={false}
+                  ref={webcamRef}
+                  className="signlang_webcam"
+                />
 
-          <canvas ref={canvasRef} className="signlang_canvas" />
+                <canvas ref={canvasRef} className="signlang_canvas" />
 
-              {/* Countdown Overlay on Video Stream - Only show when countdown is active and sign is not completed */}
-              {countdownNumber !== null && !isCompleted && (
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                fontSize: "120px",
-                fontWeight: 900,
-                color: "#4ade80",
-                textShadow: "0 0 20px rgba(74, 222, 128, 0.8), 0 0 40px rgba(74, 222, 128, 0.6)",
-                zIndex: 1000,
-                pointerEvents: "none",
-                fontFamily: "Arial, sans-serif",
-              }}
-            >
-              {countdownNumber}
-            </div>
-          )}
-
-              {/* Control Panel - Start/Repeat button, Confidence, and Timer */}
-              <div className="test-control-panel">
-              <button 
-                  className="test-control-button-panel"
-                  onClick={enableCam}
-                >
-                  {webcamRunning ? (
-                    <svg 
-                      width="24" 
-                      height="24" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round"
-                      className="test-repeat-icon"
-                    >
-                      <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-                      <path d="M21 3v5h-5"></path>
-                      <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-                      <path d="M3 21v-5h5"></path>
-                    </svg>
-                  ) : (
-                    "Start"
-                  )}
-              </button>
-                <div className="test-confidence-panel">
-                  {confidence > 0 && (
-                  <>
-                    <ProgressBar progress={confidence} />
-                      <p className="test-confidence-text-panel">
-                        Confidence: {confidence}%
-                    </p>
-                  </>
-                  )}
-                  {confidence === 0 && (
-                    <div className="test-confidence-label-panel">CONFIDENCE</div>
-                )}
-              </div>
-                <div className="test-timer-panel">
-                  <div className="test-timer-label-panel">TIME</div>
-                  <div className="test-timer-value-panel">{timerSeconds}s</div>
-          </div>
-        </div>
-
-              <div className="signlang_data-container">
-                <div className="signlang_data">
-                  {/* Only show gesture output and confidence when sign is NOT completed */}
-                  {!isCompleted && (
-                    <>
-                  <div className="gesture_output-wrapper">
-                        <p className="gesture_output">{gestureOutput || "—"}</p>
-                  </div>
-
-                      {/* Confidence Progress Bar */}
-                      {confidence > 0 && (
-                        <div style={{ marginTop: "0.5rem" }}>
-                          <ProgressBar progress={confidence} />
-                          <p
-                            style={{
-                              fontSize: "0.875rem",
-                              color: confidence >= 50 ? "#4ade80" : "#81AFDD",
-                              marginTop: "0.25rem",
-                              textAlign: "center",
-                            }}
-                          >
-                            Confidence: {confidence}%
-                          </p>
-                  </div>
-                      )}
-                    </>
-                  )}
-                  
-                  {/* Show completion message when sign is completed */}
-                  {isCompleted && (
-                    <div style={{ 
-                      marginTop: "1rem", 
-                      textAlign: "center",
+                {/* Countdown Overlay on Video Stream - Only show when countdown is active and sign is not completed */}
+                {countdownNumber !== null && !isCompleted && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      fontSize: "120px",
+                      fontWeight: 900,
                       color: "#4ade80",
-                      fontSize: "1rem",
-                      fontWeight: 600,
-                    }}>
-                      ✓ Sign Completed!
-          </div>
-                  )}
-        </div>
-      </div>
-        </div>
-        </div>
+                      textShadow: "0 0 20px rgba(74, 222, 128, 0.8), 0 0 40px rgba(74, 222, 128, 0.6)",
+                      zIndex: 1000,
+                      pointerEvents: "none",
+                      fontFamily: "Arial, sans-serif",
+                    }}
+                  >
+                    {countdownNumber}
+                  </div>
+                )}
+
+                {/* Control Panel - Start/Repeat button, Confidence, and Timer */}
+                <div className="test-control-panel">
+                  <button
+                    className="test-control-button-panel"
+                    onClick={enableCam}
+                  >
+                    {webcamRunning ? (
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="test-repeat-icon"
+                      >
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                      </svg>
+                    ) : (
+                      "Start"
+                    )}
+                  </button>
+                  <div className="test-confidence-panel">
+                    {confidence > 0 && (
+                      <>
+                        <ProgressBar progress={confidence} />
+                        <p className="test-confidence-text-panel">
+                          Confidence: {confidence}%
+                        </p>
+                      </>
+                    )}
+                    {confidence === 0 && (
+                      <div className="test-confidence-label-panel">CONFIDENCE</div>
+                    )}
+                  </div>
+                  <div className="test-timer-panel">
+                    <div className="test-timer-label-panel">TIME</div>
+                    <div className="test-timer-value-panel">{timerSeconds}s</div>
+                  </div>
+                </div>
+
+                <div className="signlang_data-container">
+                  <div className="signlang_data">
+                    {/* Only show gesture output and confidence when sign is NOT completed */}
+                    {!isCompleted && (
+                      <>
+                        <div className="gesture_output-wrapper">
+                          <p className="gesture_output">{gestureOutput || "—"}</p>
+                        </div>
+
+                        {/* Confidence Progress Bar */}
+                        {confidence > 0 && (
+                          <div style={{ marginTop: "0.5rem" }}>
+                            <ProgressBar progress={confidence} />
+                            <p
+                              style={{
+                                fontSize: "0.875rem",
+                                color: confidence >= 50 ? "#4ade80" : "#81AFDD",
+                                marginTop: "0.25rem",
+                                textAlign: "center",
+                              }}
+                            >
+                              Confidence: {confidence}%
+                            </p>
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {/* Show completion message when sign is completed */}
+                    {isCompleted && (
+                      <div style={{
+                        marginTop: "1rem",
+                        textAlign: "center",
+                        color: "#4ade80",
+                        fontSize: "1rem",
+                        fontWeight: 600,
+                      }}>
+                        ✓ Sign Completed!
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </>
         ) : (
           <div className="signlang_detection_notLoggedIn">
-             <h1 className="gradient__text">Please Login !</h1>
-      </div>
+            <h1 className="gradient__text">Please Login !</h1>
+          </div>
         )}
-    </div>
+      </div>
     </>
   );
 };

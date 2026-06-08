@@ -17,20 +17,21 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { loginSuccess, loginFail } from "../../redux/actions/authaction";
 import { useProgress } from "../../context/ProgressContext";
 import "../../pages/Test.css";
+import gestureModel from "../../assests/sign_language_recognizer_25-04-2023.task";
 
 let startTime = "";
 
 const Detect = ({ onRecognize }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Refs
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const requestRef = useRef();
   const ttsUtteranceRef = useRef(null);
   const gestureOutputRef = useRef("");
-  
+
   // Timer refs (using refs to avoid re-renders)
   const timerStartedRef = useRef(false);
   const startTimeRef = useRef(null);
@@ -46,7 +47,7 @@ const Detect = ({ onRecognize }) => {
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
   const [runningMode, setRunningMode] = useState("IMAGE");
-  
+
   // Reset to instructions screen when navigating from sidebar
   useEffect(() => {
     if (location.state?.showInstructions) {
@@ -55,7 +56,7 @@ const Detect = ({ onRecognize }) => {
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
-  
+
   // Detection state
   const [gestureOutput, setGestureOutput] = useState("");
   const [confidence, setConfidence] = useState(0);
@@ -72,7 +73,7 @@ const Detect = ({ onRecognize }) => {
   const user = useSelector((state) => state.auth?.user);
   const { accessToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  
+
   // Progress tracking
   const { updatePracticeProgress } = useProgress();
 
@@ -121,7 +122,7 @@ const Detect = ({ onRecognize }) => {
 
     // Cancel any ongoing speech to prevent overlapping
     window.speechSynthesis.cancel();
-    
+
     // Wait for speechSynthesis to be ready (handle pending state)
     const speakWithRetry = (attempt = 0) => {
       // Check if speechSynthesis is speaking or pending
@@ -137,7 +138,7 @@ const Detect = ({ onRecognize }) => {
       }
 
       let textToSpeak = text.trim();
-      
+
       // Handle single letters - add "letter" prefix for better pronunciation
       // Check if it's a single uppercase letter (A-Z)
       if (textToSpeak.length === 1 && /^[A-Z]$/.test(textToSpeak)) {
@@ -173,7 +174,7 @@ const Detect = ({ onRecognize }) => {
         utterance.onerror = (event) => {
           console.error('TTS error:', event.error, 'for text:', textToSpeak);
           ttsUtteranceRef.current = null;
-          
+
           // Retry once on error (except for cancelled errors)
           if (event.error !== 'canceled' && attempt === 0) {
             console.log('TTS: Retrying after error...');
@@ -182,7 +183,7 @@ const Detect = ({ onRecognize }) => {
         };
 
         ttsUtteranceRef.current = utterance;
-        
+
         // Ensure speechSynthesis is ready before speaking
         if (window.speechSynthesis.speaking) {
           window.speechSynthesis.cancel();
@@ -243,21 +244,21 @@ const Detect = ({ onRecognize }) => {
    */
   const handleRepeat = useCallback(() => {
     console.log('Repeat clicked - resetting for current sign');
-    
+
     // Cancel any pending auto-advance
     if (autoAdvanceTimeoutRef.current) {
       clearTimeout(autoAdvanceTimeoutRef.current);
       autoAdvanceTimeoutRef.current = null;
       console.log('Auto-advance cancelled by Repeat button');
     }
-    
+
     // Reset completion state
     setIsCompleted(false);
     isCompletedRef.current = false; // Update ref immediately
-    
+
     // Reset all timers and states
     resetAllTimers();
-    
+
     console.log('Repeat complete - detection re-enabled for current sign');
   }, [resetAllTimers]);
 
@@ -268,22 +269,22 @@ const Detect = ({ onRecognize }) => {
    */
   const handlePreviousSign = useCallback(() => {
     console.log('Previous sign clicked');
-    
+
     // Reset all timers and states
     resetAllTimers();
-    
+
     // Reset completion state for new sign
     setIsCompleted(false);
     isCompletedRef.current = false;
-    
+
     // Reset manual selection flag
     setIsManualSelection(false);
-    
+
     // Reset detection states
     setConfidence(0);
     setGestureOutput("");
     gestureOutputRef.current = "";
-    
+
     setCurrentImageIndex((prevIndex) => {
       const prevIndex_new = prevIndex === 0 ? SignImageData.length - 1 : prevIndex - 1;
       const prevImage = SignImageData[prevIndex_new];
@@ -300,22 +301,22 @@ const Detect = ({ onRecognize }) => {
    */
   const handleNextSign = useCallback(() => {
     console.log('Next sign clicked');
-    
+
     // Reset all timers and states
     resetAllTimers();
-    
+
     // Reset completion state for new sign
     setIsCompleted(false);
     isCompletedRef.current = false;
-    
+
     // Reset manual selection flag
     setIsManualSelection(false);
-    
+
     // Reset detection states
     setConfidence(0);
     setGestureOutput("");
     gestureOutputRef.current = "";
-    
+
     setCurrentImageIndex((prevIndex) => {
       const nextIndex = (prevIndex + 1) % SignImageData.length;
       const nextImage = SignImageData[nextIndex];
@@ -332,7 +333,7 @@ const Detect = ({ onRecognize }) => {
    */
   const handleManualSignSelection = useCallback((selectedIndex) => {
     console.log('Manual sign selection - index:', selectedIndex, 'sign:', SignImageData[selectedIndex]?.name);
-    
+
     // Reset all timers and states
     resetAllTimers();
 
@@ -361,33 +362,33 @@ const Detect = ({ onRecognize }) => {
    */
   const markSignCompleted = useCallback(() => {
     console.log('Sign completed - locking detection');
-    
+
     // Clear countdown immediately
     setCountdownNumber(null);
-    
+
     // Clear confidence and gesture output to hide them from UI
     setConfidence(0);
     setGestureOutput("");
     gestureOutputRef.current = "";
-    
+
     // Mark as completed (locks detection)
     setIsCompleted(true);
     isCompletedRef.current = true; // Update ref immediately
-    
+
     // Clear interval if still running
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    
+
     // Reset timer refs
     timerStartedRef.current = false;
     startTimeRef.current = null;
     hasSpokenRef.current = false;
-    
+
     // NOTE: We do NOT cancel TTS here - let it complete naturally
     // This ensures the speech finishes even after sign completion
-    
+
     console.log('Sign completion locked - Repeat button will appear');
   }, []);
 
@@ -398,27 +399,27 @@ const Detect = ({ onRecognize }) => {
    */
   const moveToNextSign = useCallback(() => {
     console.log('moveToNextSign called - will wait 5 seconds before advancing');
-    
+
     // Cancel any existing auto-advance timeout
     if (autoAdvanceTimeoutRef.current) {
       clearTimeout(autoAdvanceTimeoutRef.current);
       autoAdvanceTimeoutRef.current = null;
     }
-    
+
     // Mark as completed to show Repeat button for ALL signs
     markSignCompleted();
-    
+
     // Auto-advance to next sign after 5 seconds (works for both manual and auto modes)
     autoAdvanceTimeoutRef.current = setTimeout(() => {
       console.log('5 seconds elapsed - auto-advancing to next sign');
-      
+
       // Reset all timers and states
       resetAllTimers();
-      
+
       // Reset completion state for next sign
       setIsCompleted(false);
       isCompletedRef.current = false; // Update ref
-      
+
       // Reset manual selection flag so next sign can also auto-advance
       setIsManualSelection(false);
 
@@ -431,7 +432,7 @@ const Detect = ({ onRecognize }) => {
         currentImageNameRef.current = nextImage?.name?.toUpperCase() || null;
         return nextIndex;
       });
-      
+
       // Clear the timeout ref
       autoAdvanceTimeoutRef.current = null;
     }, 5000); // 5 second delay before auto-advancing to next sign
@@ -597,7 +598,7 @@ const Detect = ({ onRecognize }) => {
         // At 3 seconds: Complete the sign
         if (elapsedSeconds >= 3.0) {
           console.log('Timer complete at 3 seconds - marking sign as completed');
-          
+
           // Clear the interval
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
@@ -621,7 +622,7 @@ const Detect = ({ onRecognize }) => {
       const currentSignName = currentImageNameRef.current || currentImage?.name?.toUpperCase();
       const detectedSignName = gestureOutput?.toUpperCase();
       const signMatches = currentSignName && detectedSignName && detectedSignName === currentSignName;
-      
+
       if (!signMatches && gestureOutput) {
         // Sign doesn't match - reset timer
         console.log('Sign mismatch in timer useEffect - resetting. Current:', currentSignName, 'Detected:', detectedSignName);
@@ -748,7 +749,7 @@ const Detect = ({ onRecognize }) => {
         drawLandmarks(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
       }
     }
-    
+
     canvasCtx.restore();
 
     // Process gesture detection results
@@ -767,19 +768,19 @@ const Detect = ({ onRecognize }) => {
         setConfidence(confidenceScore);
 
         // Track detection data for analytics
-      setDetectedData((prevData) => [
-        ...prevData,
-        {
-          SignDetected: recognizedText,
+        setDetectedData((prevData) => [
+          ...prevData,
+          {
+            SignDetected: recognizedText,
             confidence: confidenceScore,
-        },
-      ]);
-      
-      // Call onRecognize callback if provided
-      if (onRecognize && typeof onRecognize === 'function') {
-        onRecognize(recognizedText);
-      }
-    } else {
+          },
+        ]);
+
+        // Call onRecognize callback if provided
+        if (onRecognize && typeof onRecognize === 'function') {
+          onRecognize(recognizedText);
+        }
+      } else {
         // Sign doesn't match - reset everything including timer
         // Only reset if we have a detected sign (to avoid resetting on empty detection)
         if (detectedSignName && currentSignName) {
@@ -787,7 +788,7 @@ const Detect = ({ onRecognize }) => {
         }
         setGestureOutput("");
         setConfidence(0);
-        
+
         // Reset timer if it was running (wrong sign detected)
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
@@ -802,7 +803,7 @@ const Detect = ({ onRecognize }) => {
       // No gesture detected - reset everything
       setGestureOutput("");
       setConfidence(0);
-      
+
       // Reset timer if it was running
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -884,9 +885,9 @@ const Detect = ({ onRecognize }) => {
       // Safety check: ensure startTime is a Date object before calling getTime()
       const timeElapsed = startTime && startTime instanceof Date
         ? (
-        (endTime.getTime() - startTime.getTime()) /
-        1000
-          ).toFixed(2)
+          (endTime.getTime() - startTime.getTime()) /
+          1000
+        ).toFixed(2)
         : "0.00";
 
       const nonEmptyData = detectedData.filter(
@@ -894,10 +895,10 @@ const Detect = ({ onRecognize }) => {
       );
 
       if (nonEmptyData.length > 0) {
-      const resultArray = [];
-      let current = nonEmptyData[0];
+        const resultArray = [];
+        let current = nonEmptyData[0];
 
-      for (let i = 1; i < nonEmptyData.length; i++) {
+        for (let i = 1; i < nonEmptyData.length; i++) {
           if (
             nonEmptyData[i] &&
             nonEmptyData[i].SignDetected &&
@@ -905,49 +906,49 @@ const Detect = ({ onRecognize }) => {
             current.SignDetected &&
             nonEmptyData[i].SignDetected !== current.SignDetected
           ) {
+            resultArray.push(current);
+            current = nonEmptyData[i];
+          }
+        }
+
+        if (current && current.SignDetected) {
           resultArray.push(current);
-          current = nonEmptyData[i];
         }
-      }
 
-      if (current && current.SignDetected) {
-        resultArray.push(current);
-      }
-
-      const countMap = new Map();
-      for (const item of resultArray) {
-        if (item && item.SignDetected) {
-          const count = countMap.get(item.SignDetected) || 0;
-          countMap.set(item.SignDetected, count + 1);
+        const countMap = new Map();
+        for (const item of resultArray) {
+          if (item && item.SignDetected) {
+            const count = countMap.get(item.SignDetected) || 0;
+            countMap.set(item.SignDetected, count + 1);
+          }
         }
-      }
 
-      const sortedArray = Array.from(countMap.entries()).sort(
-        (a, b) => b[1] - a[1]
-      );
-
-      const outputArray = sortedArray
-        .slice(0, 5)
-        .map(([sign, count]) => ({ SignDetected: sign, count }));
-
-      const data = {
-        signsPerformed: outputArray,
-        id: uuidv4(),
-        username: user?.name,
-        userId: user?.userId,
-        createdAt: String(endTime),
-        secondsSpent: Number(timeElapsed),
-      };
-
-      if (outputArray.length > 0 && user?.userId) {
-        dispatch(addSignData(data));
-        
-        // Update progress tracking - count total signs practiced in this session
-        const totalSignsInSession = outputArray.reduce(
-          (sum, sign) => sum + (sign.count || 0),
-          0
+        const sortedArray = Array.from(countMap.entries()).sort(
+          (a, b) => b[1] - a[1]
         );
-        updatePracticeProgress(totalSignsInSession);
+
+        const outputArray = sortedArray
+          .slice(0, 5)
+          .map(([sign, count]) => ({ SignDetected: sign, count }));
+
+        const data = {
+          signsPerformed: outputArray,
+          id: uuidv4(),
+          username: user?.name,
+          userId: user?.userId,
+          createdAt: String(endTime),
+          secondsSpent: Number(timeElapsed),
+        };
+
+        if (outputArray.length > 0 && user?.userId) {
+          dispatch(addSignData(data));
+
+          // Update progress tracking - count total signs practiced in this session
+          const totalSignsInSession = outputArray.reduce(
+            (sum, sign) => sum + (sign.count || 0),
+            0
+          );
+          updatePracticeProgress(totalSignsInSession);
         }
       }
 
@@ -957,24 +958,24 @@ const Detect = ({ onRecognize }) => {
       setWebcamRunning(true);
       startTime = new Date();
       setCurrentImageIndex(0); // Start from first image
-      
+
       // Set initial image name ref
       const firstImage = SignImageData[0];
       currentImageNameRef.current = firstImage?.name?.toUpperCase() || null;
-      
+
       // Reset all timer refs
       timerStartedRef.current = false;
       startTimeRef.current = null;
       hasSpokenRef.current = false;
       setCountdownNumber(null);
-      
+
       // Reset manual selection flag to enable auto-advance
       setIsManualSelection(false);
-      
+
       // Reset completion state when starting
       setIsCompleted(false);
       isCompletedRef.current = false; // Update ref
-      
+
       // Start animation loop - always start, no conditional check
       requestRef.current = requestAnimationFrame(animate);
     }
@@ -997,14 +998,10 @@ const Detect = ({ onRecognize }) => {
         const vision = await FilesetResolver.forVisionTasks(
           "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
         );
-        
-        const modelPath =
-          process.env.REACT_APP_MODEL_PATH ||
-          "/sign_language_recognizer_25-04-2023.task";
-        
+
         const recognizer = await GestureRecognizer.createFromOptions(vision, {
           baseOptions: {
-            modelAssetPath: modelPath,
+            modelAssetPath: gestureModel,
           },
           numHands: 2,
           runningMode: runningMode,
@@ -1045,7 +1042,7 @@ const Detect = ({ onRecognize }) => {
     process.env.NODE_ENV === "development" ||
     process.env.NODE_ENV === "production"
   ) {
-    console.log = function () {};
+    console.log = function () { };
   }
 
   // Handle Start Practice button click
@@ -1098,7 +1095,7 @@ const Detect = ({ onRecognize }) => {
                 <span>Select Sign</span>
                 <span className={`sign-selector-arrow ${isSelectorOpen ? 'open' : ''}`}>▼</span>
               </button>
-              
+
               {isSelectorOpen && (
                 <div className="sign-selector-dropdown">
                   <div className="sign-selector-header">
@@ -1115,9 +1112,8 @@ const Detect = ({ onRecognize }) => {
                     {SignImageData.map((sign, index) => (
                       <button
                         key={`${sign.name}-${index}`}
-                        className={`sign-selector-item ${
-                          index === currentImageIndex ? 'active' : ''
-                        }`}
+                        className={`sign-selector-item ${index === currentImageIndex ? 'active' : ''
+                          }`}
                         onClick={() => handleManualSignSelection(index)}
                       >
                         <span className="sign-selector-label">{sign.name}</span>
@@ -1163,7 +1159,7 @@ const Detect = ({ onRecognize }) => {
 
               <div className="signlang_data-container">
                 <div className="signlang_controls-row">
-                  <button 
+                  <button
                     onClick={enableCam}
                     type="button"
                     style={{ position: 'relative', zIndex: 1003 }}
@@ -1176,9 +1172,9 @@ const Detect = ({ onRecognize }) => {
                   {/* Only show gesture output and confidence when sign is NOT completed */}
                   {!isCompleted && (
                     <>
-                  <div className="gesture_output-wrapper">
+                      <div className="gesture_output-wrapper">
                         <p className="gesture_output">{gestureOutput || "—"}</p>
-                  </div>
+                      </div>
 
                       {/* Confidence Progress Bar */}
                       {confidence > 0 && (
@@ -1198,11 +1194,11 @@ const Detect = ({ onRecognize }) => {
                       )}
                     </>
                   )}
-                  
+
                   {/* Show completion message when sign is completed */}
                   {isCompleted && (
-                    <div style={{ 
-                      marginTop: "1rem", 
+                    <div style={{
+                      marginTop: "1rem",
                       textAlign: "center",
                       color: "#4ade80",
                       fontSize: "1rem",
@@ -1221,89 +1217,89 @@ const Detect = ({ onRecognize }) => {
               <div className="signlang_image-div">
                 {currentImage ? (
                   <>
-                      <img
-                        src={currentImage.url}
-                        alt={`Sign: ${currentImage.name}`}
-                      />
+                    <img
+                      src={currentImage.url}
+                      alt={`Sign: ${currentImage.name}`}
+                    />
 
                     {/* Repeat Button - Directly below image, always visible when sign is completed */}
-                      {isCompleted && currentImage && (
-                        <button
-                          onClick={handleRepeat}
-                          className="repeat-button"
-                          aria-label={`Repeat sign ${currentImage.name}`}
-                          title={`Repeat sign ${currentImage.name}`}
-                        >
-                          <svg 
-                            width="20" 
-                            height="20" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            strokeWidth="2" 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round"
-                          >
-                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-                            <path d="M21 3v5h-5"></path>
-                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-                            <path d="M3 21v-5h5"></path>
-                          </svg>
-                          <span>Repeat</span>
-                        </button>
-                      )}
-
-                    <div className="sign-navigation-row">
-                      <div className="nav-button-container prev-container">
+                    {isCompleted && currentImage && (
                       <button
-                        onClick={handlePreviousSign}
-                        className="nav-icon prev"
-                        aria-label="Previous sign"
-                        title="Previous sign"
+                        onClick={handleRepeat}
+                        className="repeat-button"
+                        aria-label={`Repeat sign ${currentImage.name}`}
+                        title={`Repeat sign ${currentImage.name}`}
                       >
                         <svg
-                          width="18"
-                          height="18"
+                          width="20"
+                          height="20"
                           viewBox="0 0 24 24"
                           fill="none"
-                          stroke="#fff"
-                          strokeWidth="2.5"
+                          stroke="currentColor"
+                          strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                         >
-                          <path d="M15 18l-6-6 6-6" />
+                          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                          <path d="M21 3v5h-5"></path>
+                          <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                          <path d="M3 21v-5h5"></path>
                         </svg>
+                        <span>Repeat</span>
                       </button>
+                    )}
+
+                    <div className="sign-navigation-row">
+                      <div className="nav-button-container prev-container">
+                        <button
+                          onClick={handlePreviousSign}
+                          className="nav-icon prev"
+                          aria-label="Previous sign"
+                          title="Previous sign"
+                        >
+                          <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#fff"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M15 18l-6-6 6-6" />
+                          </svg>
+                        </button>
                       </div>
 
                       <div className="sign-name-container">
-                      <div className="sign-name-label">
-                        {currentImage.name}
+                        <div className="sign-name-label">
+                          {currentImage.name}
                         </div>
                       </div>
 
                       <div className="nav-button-container next-container">
-                      <button
-                        onClick={handleNextSign}
-                        className="nav-icon next"
-                        aria-label="Next sign"
-                        title="Next sign"
-                      >
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#fff"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                        <button
+                          onClick={handleNextSign}
+                          className="nav-icon next"
+                          aria-label="Next sign"
+                          title="Next sign"
                         >
-                          <path d="M9 18l6-6-6-6" />
-                        </svg>
-                      </button>
+                          <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#fff"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M9 18l6-6-6-6" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                  </div>
                   </>
                 ) : (
                   <h3 className="gradient__text">
@@ -1315,7 +1311,7 @@ const Detect = ({ onRecognize }) => {
           </>
         ) : (
           <div className="signlang_detection_notLoggedIn">
-             <h1 className="gradient__text">Please Login !</h1>
+            <h1 className="gradient__text">Please Login !</h1>
           </div>
         )}
       </div>
