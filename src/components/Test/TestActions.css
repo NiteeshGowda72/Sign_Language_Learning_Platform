@@ -1,0 +1,66 @@
+/* Test Summary Actions */
+.test-summary-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.test-button {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.test-button.primary {
+  background: var(--color-subtext);
+  color: #fff;
+}
+
+.test-button.primary:hover {
+  background: #e8654a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(240, 116, 88, 0.3);
+}
+
+.test-button.secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.test-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.test-button.small {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  /* Maintain spacing on mobile while stacking buttons vertically */
+  .test-summary-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem; /* Maintained spacing even on mobile for consistency */
+  }
+
+  .test-button.small {
+    width: 100%;
+    padding: 0.6rem 1rem;
+  }
+}
+

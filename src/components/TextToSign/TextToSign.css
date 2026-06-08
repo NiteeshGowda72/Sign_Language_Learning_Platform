@@ -1,0 +1,300 @@
+.text-to-sign-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 80vh;
+  font-family: var(--font-family);
+}
+
+.text-to-sign-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.text-to-sign-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+.text-to-sign-header p {
+  color: #fff;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+.text-to-sign-form {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.text-to-sign-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  font-size: 1.2rem;
+  border: 2px solid var(--color-subtext);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: var(--font-family);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.text-to-sign-input:focus {
+  border-color: var(--color-subtext);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.text-to-sign-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.clear-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.clear-button:hover {
+  opacity: 1;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.submit-button,
+.animate-button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-button {
+  background-color: var(--color-subtext);
+  color: #fff;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: var(--color-subtext);
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.animate-button {
+  background-color: transparent;
+  color: var(--color-subtext);
+  border: 2px solid var(--color-subtext);
+}
+
+.animate-button:hover:not(:disabled) {
+  background-color: var(--color-subtext);
+  color: #fff;
+}
+
+.animate-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sign-images-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 2rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.hint {
+  font-size: 0.9rem !important;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.sign-images-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.sign-image-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  min-width: 150px;
+}
+
+.sign-image-wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.sign-image-wrapper.animated {
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.sign-image {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.sign-label {
+  color: var(--color-subtext);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.sign-space {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+}
+
+.sign-fallback {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-subtext), #ff6b6b);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+  .text-to-sign-container {
+    padding: 1rem;
+  }
+
+  .text-to-sign-header h2 {
+    font-size: 2rem;
+  }
+
+  .text-to-sign-input {
+    font-size: 1rem;
+    padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+  }
+
+  .sign-images-grid {
+    gap: 1rem;
+  }
+
+  .sign-image-wrapper {
+    min-width: 120px;
+    padding: 0.75rem;
+  }
+
+  .sign-image,
+  .sign-space,
+  .sign-fallback {
+    width: 120px;
+    height: 120px;
+  }
+
+  .sign-fallback {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .text-to-sign-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .submit-button,
+  .animate-button {
+    width: 100%;
+  }
+
+  .sign-image-wrapper {
+    min-width: 100px;
+  }
+
+  .sign-image,
+  .sign-space,
+  .sign-fallback {
+    width: 100px;
+    height: 100px;
+  }
+}
+

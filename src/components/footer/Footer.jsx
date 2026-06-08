@@ -1,0 +1,33 @@
+import React from 'react'
+import "./Footer.css"
+import logo from "../../assests/logo.png"
+import { Link } from "react-router-dom"
+
+const Footer = () => {
+  return (
+    <div className="signlang__footer section__padding">
+  
+      <div className="signlang__footer-logo">
+        <img src={logo} alt="signlang_logo" />
+      </div>
+
+      <div className="signlang__footer-links">
+        <Link to="/feedback" className="footer-link">
+          Feedback
+        </Link>
+      </div>
+
+      <div className="signlang__footer-copyright">
+        <h3>
+          &#169; &nbsp;2025
+          &nbsp;&nbsp;
+          <span>SLR</span>
+          &nbsp;&nbsp;
+          All rights reserved.
+        </h3>
+      </div>
+  </div>
+  )
+}
+
+export default Footer

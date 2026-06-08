@@ -1,0 +1,202 @@
+/* SpeechToText Component Styles */
+
+.speech-to-text-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.speech-to-text-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.speech-to-text-subtitle {
+  text-align: center;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+/* Error message styling */
+.speech-to-text-error {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid #ff6b6b;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffebee;
+  font-weight: 500;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+/* Text display area */
+.speech-to-text-display {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 2rem;
+  min-height: 150px;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-y: auto;
+  max-height: 300px;
+  color: white;
+}
+
+.placeholder-text {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+/* Control buttons */
+.speech-to-text-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.speech-to-text-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.start-button {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.start-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.start-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.stop-button {
+  background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+}
+
+.stop-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.stop-button:active {
+  transform: translateY(0);
+}
+
+.clear-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.clear-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.clear-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button-icon {
+  font-size: 1.2rem;
+}
+
+/* Listening indicator */
+.listening-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffebee;
+}
+
+.pulse-dot {
+  width: 12px;
+  height: 12px;
+  background-color: #ff6b6b;
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .speech-to-text-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .speech-to-text-title {
+    font-size: 1.5rem;
+  }
+
+  .speech-to-text-display {
+    padding: 1.5rem;
+    font-size: 1rem;
+    min-height: 120px;
+  }
+
+  .speech-to-text-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .speech-to-text-controls {
+    flex-direction: column;
+  }
+
+  .speech-to-text-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+
+
+
+

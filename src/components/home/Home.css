@@ -1,0 +1,467 @@
+/* Home Container */
+.home-container {
+  min-height: 100vh;
+  background: var(--color-bg);
+  font-family: var(--font-family);
+  position: relative;
+  padding-top: 90px; /* Space for fixed header */
+}
+
+/* Hamburger Menu Toggle Button - Left Side */
+.home-menu-toggle-button {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #fff;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1002;
+}
+
+.home-menu-toggle-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.home-menu-toggle-icon {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+/* Menu Dropdown */
+.home-menu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  margin-top: 0.5rem;
+  background: var(--color-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  min-width: 240px;
+  z-index: 1001;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.home-menu-nav {
+  padding: 0.5rem 0;
+}
+
+.home-menu-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+}
+
+.home-menu-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.home-menu-link.active {
+  background: rgba(240, 116, 88, 0.15);
+  color: var(--color-subtext);
+  border-left: 3px solid var(--color-subtext);
+}
+
+.home-menu-link.active .home-menu-icon {
+  color: var(--color-subtext);
+}
+
+.home-menu-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+  color: var(--color-text);
+}
+
+.home-menu-link:hover .home-menu-icon {
+  color: var(--color-subtext);
+}
+
+.home-menu-text {
+  flex: 1;
+  white-space: nowrap;
+}
+
+/* Menu Overlay (for mobile) */
+.home-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+@media screen and (max-width: 768px) {
+  .home-menu-dropdown {
+    left: 0;
+    right: 0;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: 300px;
+  }
+}
+
+/* Home Header - Fixed at top */
+.home-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 10px;
+  border-bottom: none;
+  background: var(--color-bg);
+  z-index: 1000;
+  min-height: 90px;
+}
+
+.home-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+  position: relative;
+  padding: 0 1rem;
+}
+
+.home-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.home-logo-link:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.home-logo-link:hover {
+  transform: scale(1.05);
+}
+
+.home-logo {
+  width: 100px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.home-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.home-profile-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.home-profile-link:hover {
+  transform: scale(1.1);
+}
+
+.home-profile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--color-subtext);
+  object-fit: cover;
+}
+
+.home-profile-avatar-initial {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-subtext);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: 2px solid var(--color-subtext);
+}
+
+.home-auth-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-auth-button {
+  padding: 0.5rem 1.25rem;
+  color: #fff;
+  background: transparent;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.home-auth-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.home-auth-button.primary {
+  background: var(--color-subtext);
+  border-color: var(--color-subtext);
+}
+
+.home-auth-button.primary:hover {
+  background: #e8654a;
+  border-color: #e8654a;
+}
+
+/* Main Content */
+.home-main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Welcome Section */
+.home-welcome-section {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.home-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.home-subtitle {
+  font-size: 1.25rem;
+  color: var(--color-text);
+  opacity: 0.9;
+}
+
+/* Mode Cards */
+.home-mode-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.home-mode-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.home-mode-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(240, 116, 88, 0.1) 0%, rgba(174, 103, 250, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.home-mode-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-subtext);
+  box-shadow: 0 12px 40px rgba(240, 116, 88, 0.2);
+}
+
+.home-mode-card:hover::before {
+  opacity: 1;
+}
+
+.home-mode-card-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.home-mode-card-icon.practice {
+  background: rgba(240, 116, 88, 0.2);
+  color: var(--color-subtext);
+}
+
+.home-mode-card-icon.test {
+  background: rgba(174, 103, 250, 0.2);
+  color: #AE67FA;
+}
+
+.home-mode-card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.home-mode-card-description {
+  font-size: 1.1rem;
+  color: var(--color-text);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.home-mode-card-arrow {
+  font-size: 1.5rem;
+  color: var(--color-subtext);
+  opacity: 0;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.home-mode-card:hover .home-mode-card-arrow {
+  opacity: 1;
+  transform: translateX(8px);
+}
+
+/* About Link */
+.home-about-link {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.home-about-link-text {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.home-about-link-text:hover {
+  color: var(--color-subtext);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .home-header {
+    padding: 1rem 10px;
+  }
+
+  .home-logo {
+    width: 80px;
+    height: 72px;
+  }
+
+  .home-main-content {
+    padding: 3rem 1.5rem;
+  }
+
+  .home-title {
+    font-size: 2rem;
+  }
+
+  .home-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .home-mode-cards {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .home-mode-card {
+    padding: 2.5rem 2rem;
+  }
+
+  .home-auth-links {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .home-auth-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .home-header {
+    padding: 1rem 10px;
+  }
+
+  .home-logo {
+    width: 60px;
+    height: 54px;
+  }
+
+  .home-title {
+    font-size: 1.75rem;
+  }
+
+  .home-mode-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .home-mode-card-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+}
+

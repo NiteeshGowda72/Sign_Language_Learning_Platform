@@ -1,0 +1,1589 @@
+/* Test Container */
+.test-container {
+  height: 100vh;
+  background: var(--color-bg);
+  font-family: var(--font-family);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Test Completion Page */
+.test-completion-page {
+  max-width: 1400px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  overflow: hidden;
+}
+
+/* Motivational Message */
+.test-motivational-message {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: rgba(20, 20, 30, 0.95);
+  border-radius: 8px;
+  border: 1px solid rgba(129, 175, 221, 0.3);
+  text-align: center;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+/* Test Completion Title */
+.test-completion-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+/* Result Box */
+.test-result-box {
+  width: 100%;
+  max-width: 300px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid;
+  background: rgba(20, 20, 30, 0.95);
+  flex-shrink: 0;
+}
+
+.test-result-box.low {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+}
+
+.test-result-box.medium {
+  background: rgba(234, 179, 8, 0.15);
+  border-color: #eab308;
+}
+
+.test-result-box.high {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: #22c55e;
+}
+
+.test-result-score {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.test-result-accuracy {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 0.25rem;
+  opacity: 0.9;
+}
+
+/* Results Grid - Performance Summary and Scoreboard Side by Side */
+.test-results-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  flex: 1;
+  min-height: 0;
+  align-items: start;
+}
+
+/* Performance Summary */
+.test-performance-summary {
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 30, 0.95);
+  border-radius: 8px;
+  border: 1px solid rgba(129, 175, 221, 0.3);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.test-performance-summary-title {
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.test-performance-summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.test-performance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(129, 175, 221, 0.2);
+  flex-shrink: 0;
+}
+
+.test-performance-item:last-child {
+  border-bottom: none;
+}
+
+.test-performance-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  flex: 1;
+}
+
+.test-performance-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #81AFDD;
+  text-align: right;
+  flex: 1;
+}
+
+/* Test Start Screen */
+.test-start-screen {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  background: rgba(20, 20, 30, 0.95);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  border: 1px solid rgba(129, 175, 221, 0.3);
+}
+
+.test-start-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.test-start-info {
+  text-align: left;
+  margin: 2rem 0;
+}
+
+.test-start-info h2,
+.test-instructions-title {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1.5rem !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  background: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  display: block !important;
+  color: transparent !important;
+}
+
+.test-rules-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.test-rules-list li {
+  color: var(--color-text);
+  font-size: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(129, 175, 221, 0.2);
+  line-height: 1.6;
+}
+
+.test-rules-list li:last-child {
+  border-bottom: none;
+}
+
+/* Test Start Buttons Container */
+.test-start-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem; /* Increased gap between buttons */
+  margin-top: 2rem;
+}
+
+/* Test Header */
+.test-header {
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.test-progress {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Test Content */
+.test-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+/* Sign Label at TOP */
+.test-sign-label-top {
+  text-align: center;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgba(240, 116, 88, 0.1);
+  border-radius: 12px;
+  border: 2px solid var(--color-subtext);
+  flex-shrink: 0;
+}
+
+.test-sign-name-display {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.test-sign-instruction {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin-top: 0.25rem;
+  opacity: 0.9;
+}
+
+/* Webcam Section - Same layout as Detect page */
+.test-webcam-section {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  position: relative;
+  margin: 0 auto;
+}
+
+.test-webcam-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 500px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.test-webcam {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 999;
+  border-radius: 12px;
+}
+
+.test-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+/* Confidence Display BELOW webcam - Same as Detect page */
+.test-confidence-display {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: rgba(40, 40, 50, 0.8); /* Dark grey rounded rectangle */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Controls Row - Horizontal layout for button and confidence */
+.test-controls-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Confidence Info - Right side of button */
+.test-confidence-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 200px;
+  gap: 0.5rem;
+}
+
+.test-confidence-bar {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.test-completion-message {
+  color: #4ade80;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Start Timer Box - Square keycap style */
+.test-start-timer-box {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(60, 40, 30, 0.9); /* Dark reddish-brown */
+  border-radius: 12px;
+  border: 2px solid var(--color-subtext);
+  box-shadow: 0 0 15px rgba(240, 116, 88, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.3);
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+.test-start-timer-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-subtext); /* Orange/reddish-orange */
+  font-family: 'Arial', sans-serif;
+  text-shadow: 0 0 10px rgba(240, 116, 88, 0.8);
+  line-height: 1;
+}
+
+/* Test Control Button - Stop/Start */
+.test-control-button {
+  width: 100px;
+  height: 32px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background-color: var(--color-subtext); /* Same as Detect page */
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  margin: 0;
+}
+
+.test-control-button:hover {
+  background-color: #e8654a;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(240, 116, 88, 0.3);
+}
+
+/* Divider Line - Reddish-orange horizontal line */
+.test-divider-line {
+  width: 100%;
+  height: 2px;
+  background: var(--color-subtext); /* Reddish-orange */
+  border-radius: 1px;
+  margin: 0;
+}
+
+/* Gesture Output - Same as Detect page */
+.gesture_output-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.test-confidence-info .gesture_output-wrapper {
+  margin-bottom: 0.25rem;
+}
+
+.gesture_output {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-subtext);
+  margin: 0;
+  letter-spacing: 2px;
+  width: 100%;
+}
+
+/* Timer Display BELOW confidence */
+.test-timer-display {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.test-timer-label {
+  font-size: 0.85rem;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.test-timer-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-subtext);
+  transition: color 0.3s ease;
+}
+
+.test-timer-value.warning {
+  color: #ef4444;
+  animation: pulse 1s infinite;
+}
+
+/* Horizontal Controls Row - Stop, Confidence, Timer */
+.test-controls-row-horizontal {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(40, 40, 50, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+/* Stop Button */
+.test-stop-button {
+  width: 100px;
+  height: 40px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background-color: var(--color-subtext);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.test-stop-button:hover {
+  background-color: #e8654a;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(240, 116, 88, 0.3);
+}
+
+/* Confidence Inline Display */
+.test-confidence-inline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 120px;
+}
+
+.test-confidence-inline .progress-bar-container {
+  width: 100%;
+  max-width: 200px;
+}
+
+.test-confidence-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+  text-align: center;
+}
+
+/* Timer Inline Display */
+.test-timer-inline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  min-width: 100px;
+}
+
+.test-timer-label-inline {
+  font-size: 0.75rem;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.test-timer-value-inline {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-subtext);
+  transition: color 0.3s ease;
+  margin: 0;
+  line-height: 1;
+}
+
+.test-timer-value-inline.warning {
+  color: #ef4444;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Test Practice Wrapper - Contains signs and webcam */
+.test-practice-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Override Detect.css for Test page layout - Only apply to Test page */
+.test-container .signlang_detection-container {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 1rem !important;
+  min-height: 100vh !important;
+}
+
+/* Reduce webcam size ONLY in Test page (not Practice page) */
+.signlang_detection-container:has(.test-practice-wrapper) .signlang_webcam {
+  width: 100% !important;
+  max-width: 500px !important;
+  height: auto !important;
+  max-height: 400px !important;
+  aspect-ratio: 6/5;
+  object-fit: contain;
+}
+
+.signlang_detection-container:has(.test-practice-wrapper) .signlang_canvas {
+  width: 100% !important;
+  max-width: 500px !important;
+  height: auto !important;
+  max-height: 400px !important;
+}
+
+.signlang_detection-container:has(.test-practice-wrapper) > div[style*="position: relative"] {
+  max-width: 500px !important;
+  width: 100% !important;
+  margin: 0 auto;
+}
+
+/* Test Practice Wrapper - Contains signs and webcam */
+.test-practice-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* SIGNS TO PRACTICE Section */
+.test-signs-practice-container {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0;
+}
+
+.test-signs-practice-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 1rem 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.test-signs-practice-boxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 900px;
+  overflow: visible;
+  padding: 0.5rem 0;
+}
+
+.test-sign-practice-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 0.4rem;
+  min-width: 100px;
+  width: 100px;
+  height: 90px;
+  background: rgba(20, 20, 30, 0.95);
+  border: 1px solid #81AFDD;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+/* Default - Blue (all boxes start blue) */
+.test-sign-practice-box.incomplete {
+  border: 1px solid #81AFDD;
+  background: rgba(20, 20, 30, 0.95);
+}
+
+.test-sign-practice-box.incomplete .test-sign-practice-number,
+.test-sign-practice-box.incomplete .test-sign-practice-name {
+  color: #81AFDD;
+  text-shadow: 0 0 6px rgba(129, 175, 221, 0.5);
+}
+
+/* Active sign - Yellow (when user is performing the sign) */
+.test-sign-practice-box.active:not(.completed):not(.failed) {
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid #eab308;
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.6), inset 0 0 10px rgba(234, 179, 8, 0.1);
+}
+
+.test-sign-practice-box.active:not(.completed):not(.failed) .test-sign-practice-number,
+.test-sign-practice-box.active:not(.completed):not(.failed) .test-sign-practice-name {
+  color: #eab308;
+  text-shadow: 0 0 8px rgba(234, 179, 8, 0.6);
+}
+
+/* Completed sign - Green */
+.test-sign-practice-box.completed {
+  border: 1px solid #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.test-sign-practice-box.completed .test-sign-practice-number,
+.test-sign-practice-box.completed .test-sign-practice-name {
+  color: #22c55e;
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+}
+
+/* Failed sign - Red (timed out) */
+.test-sign-practice-box.failed {
+  border: 1px solid #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.test-sign-practice-box.failed .test-sign-practice-number,
+.test-sign-practice-box.failed .test-sign-practice-name {
+  color: #ef4444;
+  text-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+}
+
+/* Active + Completed - Green (when active sign is completed) */
+.test-sign-practice-box.active.completed {
+  border: 1px solid #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6), inset 0 0 10px rgba(34, 197, 94, 0.1);
+}
+
+.test-sign-practice-box.active.completed .test-sign-practice-number,
+.test-sign-practice-box.active.completed .test-sign-practice-name {
+  color: #22c55e;
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+}
+
+.test-sign-practice-number {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.test-sign-practice-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Test Controls */
+.test-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+}
+
+/* Control Panel - Below webcam with Start/Stop and Timer */
+.test-control-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 600px;
+  padding: 0.75rem 1rem;
+  background: rgba(40, 40, 50, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1rem;
+  flex-shrink: 0;
+}
+
+/* Start/Repeat Button in Control Panel */
+.test-control-button-panel {
+  width: 100px;
+  height: 40px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background-color: var(--color-subtext);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  margin: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.test-control-button-panel:hover {
+  background-color: #e8654a;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(240, 116, 88, 0.3);
+}
+
+.test-repeat-icon {
+  width: 24px;
+  height: 24px;
+  color: #fff;
+}
+
+/* Confidence Display in Control Panel */
+.test-confidence-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  background: rgba(20, 20, 30, 0.95);
+  border-radius: 8px;
+  border: 1px solid #81AFDD;
+  flex-shrink: 0;
+  min-width: 120px;
+}
+
+.test-confidence-panel .progress-bar-container {
+  width: 100%;
+  max-width: 150px;
+}
+
+.test-confidence-label-panel {
+  font-size: 0.75rem;
+  color: #81AFDD;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 0 0 8px rgba(129, 175, 221, 0.5);
+}
+
+.test-confidence-text-panel {
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0 0;
+  text-align: center;
+  transition: color 0.3s ease;
+  color: #81AFDD;
+  text-shadow: 0 0 8px rgba(129, 175, 221, 0.5);
+}
+
+/* Timer Display in Control Panel */
+.test-timer-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  background: rgba(20, 20, 30, 0.95);
+  border-radius: 8px;
+  border: 1px solid #81AFDD;
+  flex-shrink: 0;
+  min-width: 100px;
+}
+
+.test-timer-label-panel {
+  font-size: 0.75rem;
+  color: #81AFDD;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 0 0 8px rgba(129, 175, 221, 0.5);
+}
+
+.test-timer-value-panel {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #81AFDD;
+  transition: color 0.3s ease;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 0 8px rgba(129, 175, 221, 0.5);
+}
+
+/* Test Buttons */
+.test-button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.test-button.primary {
+  background: var(--color-subtext);
+  color: #fff;
+}
+
+.test-button.primary:hover {
+  background: #e8654a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(240, 116, 88, 0.3);
+}
+
+.test-button.primary.large {
+  padding: 0.75rem 2rem; /* Reduced from 1rem 3rem */
+  font-size: 1rem; /* Reduced from 1.25rem */
+}
+
+.test-button.secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.test-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.test-button.small {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+.test-button.danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.test-button.danger:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+/* Test Summary */
+.test-summary {
+  max-width: 900px;
+  width: 100%;
+  max-height: calc(100vh - 2rem);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 1.5rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Add gap between children */
+}
+
+/* Removed .test-summary-title - "Test Completed!" title removed */
+
+.test-result-score {
+  margin-bottom: 0.75rem;
+  margin-top: 0; /* Move content upward */
+  flex-shrink: 0;
+}
+
+.test-result {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 2px solid;
+  flex-shrink: 0;
+  display: inline-block;
+  min-width: 150px;
+}
+
+.test-result.pass {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.test-result.fail {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.test-result h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.test-score-display {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Scoreboard and Actions are now separate components */
+
+/* Custom Scrollbar for Scoreboard */
+.test-summary::-webkit-scrollbar,
+.test-scoreboard-table::-webkit-scrollbar {
+  width: 8px;
+}
+
+.test-summary::-webkit-scrollbar-track,
+.test-scoreboard-table::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.test-summary::-webkit-scrollbar-thumb,
+.test-scoreboard-table::-webkit-scrollbar-thumb {
+  background: var(--color-subtext);
+  border-radius: 4px;
+}
+
+.test-summary::-webkit-scrollbar-thumb:hover,
+.test-scoreboard-table::-webkit-scrollbar-thumb:hover {
+  background: #e8654a;
+}
+
+/* Test Page Layout - Column layout for signs and webcam */
+.test-page-layout {
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  position: relative;
+  z-index: 1; /* Ensure test content is above sidebar on desktop */
+  pointer-events: auto; /* Allow interactions with test content */
+}
+
+.test-webcam-wrapper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Test Signs Row - Above webcam */
+.test-signs-row {
+  width: 100%;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+  padding: 0;
+  padding-top: 0.5rem; /* Add padding to avoid overlap with menu button */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.test-signs-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.test-signs-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.test-sign-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.5rem;
+  width: 80px; /* Fixed width to accommodate longest sign (ILoveYou, ThankYou) */
+  min-width: 80px;
+  max-width: 80px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: default;
+  transition: all 0.3s ease;
+  gap: 0.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.test-sign-button.active {
+  background: rgba(240, 116, 88, 0.2);
+  border: 2px solid var(--color-subtext);
+  box-shadow: 0 0 15px rgba(240, 116, 88, 0.6), inset 0 0 10px rgba(240, 116, 88, 0.1);
+  transform: scale(1.05);
+}
+
+.test-sign-number {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+.test-sign-button.active .test-sign-number {
+  color: #81AFDD;
+  opacity: 1;
+}
+
+.test-sign-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.test-sign-button.active .test-sign-name {
+  color: var(--color-subtext);
+  text-shadow: 0 0 8px rgba(240, 116, 88, 0.5);
+}
+
+/* Completed sign - Green */
+.test-sign-button.completed {
+  background: rgba(34, 197, 94, 0.2);
+  border: 2px solid #22c55e;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6), inset 0 0 10px rgba(34, 197, 94, 0.1);
+}
+
+.test-sign-button.completed .test-sign-number {
+  color: #22c55e;
+  opacity: 1;
+}
+
+.test-sign-button.completed .test-sign-name {
+  color: #22c55e;
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+/* Incomplete sign - Red */
+.test-sign-button.incomplete {
+  background: rgba(239, 68, 68, 0.2);
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.6), inset 0 0 10px rgba(239, 68, 68, 0.1);
+}
+
+.test-sign-button.incomplete .test-sign-number {
+  color: #ef4444;
+  opacity: 1;
+}
+
+.test-sign-button.incomplete .test-sign-name {
+  color: #ef4444;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+/* Active sign can override completed/incomplete when it's the current sign */
+.test-sign-button.active.completed {
+  background: rgba(34, 197, 94, 0.3);
+  border: 2px solid #22c55e;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.8), inset 0 0 10px rgba(34, 197, 94, 0.2);
+}
+
+.test-sign-button.active.incomplete {
+  background: rgba(239, 68, 68, 0.3);
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.8), inset 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .test-page-layout {
+    padding: 0.5rem;
+  }
+
+  .test-webcam-wrapper-container {
+    max-width: 100%;
+  }
+
+  .test-signs-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .test-signs-buttons {
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .test-sign-button {
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+    padding: 0.4rem 0.4rem;
+  }
+
+  .test-sign-name {
+    font-size: 0.7rem;
+  }
+
+  .test-sign-number {
+    font-size: 0.6rem;
+  }
+
+  .test-sign-name {
+    font-size: 0.75rem;
+  }
+
+  .test-container {
+    padding: 0.5rem;
+    height: 100vh;
+  }
+
+  .test-summary {
+    max-height: calc(100vh - 1rem);
+    padding: 1rem;
+  }
+
+  .test-summary-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .test-result {
+    padding: 0.6rem 0.85rem;
+    min-width: 120px;
+  }
+
+  .test-result h2 {
+    font-size: 1.1rem;
+  }
+
+  .test-score-display {
+    font-size: 1rem;
+  }
+
+  .test-scoreboard {
+    margin: 0.75rem 0;
+  }
+
+  .test-scoreboard-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .test-scoreboard-table th,
+  .test-scoreboard-table td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .test-signs-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .test-summary-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .test-signs-practice-container {
+    max-width: 100%;
+    gap: 0.75rem;
+  }
+
+  .test-signs-practice-title {
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.75rem;
+  }
+
+  .test-signs-practice-boxes {
+    gap: 0.35rem;
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .test-sign-practice-box {
+    min-width: 75px;
+    width: 75px;
+    height: 70px;
+    padding: 0.5rem 0.3rem;
+  }
+
+  .test-sign-practice-name {
+    font-size: 0.65rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .test-sign-practice-box.active .test-sign-practice-name {
+    font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .test-signs-title {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+
+  .test-signs-buttons {
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .test-sign-button {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    padding: 0.35rem 0.35rem;
+    flex: 0 0 60px; /* Fixed size, 5 per line */
+  }
+
+  .test-sign-name {
+    font-size: 0.65rem;
+  }
+
+  .test-sign-number {
+    font-size: 0.55rem;
+  }
+
+  .test-sign-name {
+    font-size: 0.7rem;
+  }
+
+  .test-button.small {
+    width: 100%;
+    padding: 0.6rem 1rem;
+  }
+
+  .test-header {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .test-progress {
+    font-size: 0.95rem;
+  }
+
+  .test-sign-label-top {
+    padding: 0.75rem 1rem;
+  }
+
+  .test-sign-name-display {
+    font-size: 1.75rem;
+    letter-spacing: 2px;
+  }
+
+  .test-sign-instruction {
+    font-size: 0.8rem;
+  }
+
+  .test-webcam-wrapper {
+    width: 100%;
+    max-width: 100%;
+    height: 400px;
+  }
+
+  .test-webcam,
+  .test-canvas {
+    width: 100%;
+    max-width: 100%;
+    height: 400px;
+  }
+
+  .test-confidence-display,
+  .test-timer-display {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .test-confidence-value {
+    font-size: 1.5rem;
+  }
+
+  .test-timer-value {
+    font-size: 2rem;
+  }
+
+  .test-controls-row-horizontal {
+    gap: 1rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .test-stop-button {
+    width: 80px;
+    height: 36px;
+    font-size: 0.85rem;
+  }
+
+  .test-confidence-inline {
+    min-width: 100px;
+  }
+
+  .test-timer-inline {
+    min-width: 80px;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .test-timer-value-inline {
+    font-size: 1.25rem;
+  }
+
+  .test-control-panel {
+    max-width: 100%;
+    padding: 0.6rem 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .test-control-button-panel {
+    width: 80px;
+    height: 36px;
+    font-size: 0.85rem;
+  }
+
+  .test-confidence-panel {
+    min-width: 100px;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .test-confidence-panel .progress-bar-container {
+    max-width: 120px;
+  }
+
+  .test-confidence-text-panel {
+    font-size: 0.8rem;
+  }
+
+  .test-timer-panel {
+    min-width: 80px;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .test-timer-value-panel {
+    font-size: 1.25rem;
+  }
+
+  .test-signs-practice-container {
+    max-width: 100%;
+    gap: 0.5rem;
+  }
+
+  .test-signs-practice-title {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .test-signs-practice-boxes {
+    gap: 0.25rem;
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .test-sign-practice-box {
+    min-width: 65px;
+    width: 65px;
+    height: 65px;
+    padding: 0.45rem 0.25rem;
+  }
+
+  .test-sign-practice-number {
+    font-size: 0.55rem;
+  }
+
+  .test-sign-practice-name {
+    font-size: 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .test-sign-practice-box.active .test-sign-practice-name {
+    font-size: 0.65rem;
+  }
+
+  .test-summary-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .test-scoreboard-table {
+    font-size: 0.9rem;
+  }
+
+  .test-scoreboard-table th,
+  .test-scoreboard-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .test-webcam-wrapper {
+    height: 250px;
+  }
+
+  .test-sign-name-display {
+    font-size: 2rem;
+  }
+
+  .test-confidence-value {
+    font-size: 1.75rem;
+  }
+
+  .test-timer-value {
+    font-size: 2rem;
+  }
+}

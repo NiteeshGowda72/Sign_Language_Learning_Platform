@@ -1,0 +1,685 @@
+.signlang_detection-container {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  font-family: var(--font-family);
+  flex-wrap: nowrap !important;
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
+  height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
+  margin: 0 auto;
+  overflow: hidden !important;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Ensure webcam wrapper and image container align at top */
+.signlang_detection-container > div {
+  align-self: flex-start;
+}
+
+/* Ensure this only applies to Detect page, not Test page */
+body:not(.test-page) .signlang_detection-container {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+/* Ensure sign selector doesn't interfere with flex layout */
+.sign-selector-container {
+  position: absolute !important;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+/* Webcam wrapper - contains webcam, canvas, and data container */
+.signlang_webcam-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  width: 50% !important;
+  max-width: 600px;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  align-self: flex-start;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.signlang_webcam {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  max-height: calc(100vh - 300px);
+  aspect-ratio: 6/5;
+  z-index: 999;
+  flex-shrink: 0;
+  object-fit: contain;
+  margin-top: 0;
+  padding-top: 0;
+  position: relative;
+}
+
+.signlang_canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  pointer-events: none;
+  object-fit: contain;
+  max-width: 600px;
+  max-height: calc(100vh - 300px);
+  aspect-ratio: 6/5;
+}
+
+.signlang_data-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 600px;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  position: relative;
+  z-index: 1000;
+}
+
+.signlang_controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+  z-index: 1002;
+}
+
+.signlang_data-container .signlang_data {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 1rem;
+  gap: 0.5rem;
+}
+
+.gesture_output-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.signlang_data-container button {
+  width: 100px;
+  height: 32px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  background-color: var(--color-subtext);
+  color: #fff;
+  font-family: var(--font-family);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  margin: 0;
+  position: relative;
+  z-index: 1001;
+}
+
+.signlang_data-container button:hover {
+  background-color: #e8654a;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(240, 116, 88, 0.3);
+}
+
+.signlang_data-container button:active {
+  transform: translateY(0);
+}
+
+.signlang_data-container p {
+  font-size: 20px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gesture_output {
+  color: var(--color-subtext);
+  width: 100%;
+}
+
+.signlang_imagelist-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  width: calc(50% - 0.75rem) !important;
+  max-width: 600px;
+  min-width: 0;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-self: flex-start;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.signlang_imagelist-container h2 {
+  /* color: var(--color-subtext); */
+  font-size: 25px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 5px;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.signlang_image-div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.5rem;
+  padding-top: 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  margin-top: 0;
+}
+
+.signlang_image-div img {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+/* Navigation Row - Below image, contains buttons and sign name */
+.sign-navigation-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:5rem;
+  width: 100%;
+  padding: 0 1rem;
+  position: relative;
+  gap: 0;
+}
+
+/* Navigation Button Containers - Fixed width to prevent layout shift */
+.nav-button-container {
+  width: 100px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.prev-container {
+  order: 1;
+}
+
+.next-container {
+  order: 3;
+}
+
+/* Sign Name Container - Fixed width, centered */
+.sign-name-container {
+  order: 2;
+  width: auto;
+  min-width: 200px;
+  margin: 0 1rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Navigation Icons - Default (minimal, no color) */
+.nav-icon {
+  width: 40px;              /* SMALL by default */
+  height: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  font-family: var(--font-family);
+  border-radius: 8px;
+  background-color: transparent;  /* NO COLOR */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* On hover: same size & color as Start button */
+.nav-icon:hover {
+  width: 100px;                          /* SAME as Start */
+  background-color: var(--color-subtext); /* SAME color */
+  color: #fff;
+}
+
+/* Sign Name Label - Center, between navigation buttons */
+.sign-name-label {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 3px;
+  padding: 0 2rem;
+  white-space: nowrap;
+}
+
+/* Repeat Button - Directly below image, always visible when sign is completed */
+.repeat-button {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: rgba(74, 222, 128, 0.95);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 16px rgba(74, 222, 128, 0.4);
+  transition: all 0.3s ease;
+  font-family: var(--font-family);
+  min-width: 120px;
+  white-space: nowrap;
+}
+
+.repeat-button:hover {
+  background: rgba(74, 222, 128, 1);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.repeat-button:active {
+  transform: scale(1);
+}
+
+.signlang_image-div button {
+  width: 50%;
+  background-color: inherit;
+  outline: none;
+  border: none;
+  color: var(--color-subtext);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.signlang_imagelist-container h3 {
+  margin-bottom: 10rem;
+  line-height: 2;
+}
+
+
+.signlang_detection_notLoggedIn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 2rem;
+}
+
+.signlang_detection_notLoggedIn h1{
+  letter-spacing: 5px;
+  font-weight: 800;
+}
+
+.signlang_detection_notLoggedIn p{
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  width: 60%;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+/* Image removed from login message */
+
+/* Sign Selector Styles */
+.sign-selector-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1001;
+  font-family: var(--font-family);
+}
+
+/* Hide Select Sign button on mobile when navbar menu is visible */
+@media screen and (max-width: 900px) {
+  .sign-selector-container {
+    display: none;
+  }
+}
+
+.signlang_detection-container {
+  position: relative;
+}
+
+.sign-selector-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid var(--color-subtext);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sign-selector-button:hover {
+  background: rgba(0, 0, 0, 0.95);
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.sign-selector-button:active {
+  transform: translateY(0);
+}
+
+.sign-selector-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+  color: var(--color-subtext);
+}
+
+.sign-selector-arrow.open {
+  transform: rotate(180deg);
+}
+
+.sign-selector-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(0, 0, 0, 0.95);
+  border: 2px solid var(--color-subtext);
+  border-radius: 8px;
+  min-width: 250px;
+  max-width: 300px;
+  max-height: 400px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sign-selector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.sign-selector-close {
+  background: transparent;
+  border: none;
+  color: var(--color-subtext);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.sign-selector-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.sign-selector-list {
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+
+/* Custom scrollbar for sign selector */
+.sign-selector-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sign-selector-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sign-selector-list::-webkit-scrollbar-thumb {
+  background: var(--color-subtext);
+  border-radius: 3px;
+}
+
+.sign-selector-list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text);
+}
+
+.sign-selector-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: var(--font-family);
+}
+
+.sign-selector-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sign-selector-item.active {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.sign-selector-item.active:hover {
+  background: rgba(74, 222, 128, 0.3);
+}
+
+.sign-selector-label {
+  flex: 1;
+}
+
+.sign-selector-check {
+  color: #4ade80;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+
+@media screen and (max-width: 1080px) {
+  .signlang_webcam {
+    width: 550px;
+    height: 500px;
+  }
+
+  .signlang_canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 550px;
+    height: 500px;
+  }
+
+  .signlang_image-div {
+    width: fit-content;
+    height: 400px;
+  }
+
+  .signlang_image-div img {
+    width: 300px;
+    height: 300px;
+  }
+
+  .sign-name-label {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .signlang_detection-container {
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+    overflow-y: auto;
+  }
+  
+  .signlang_webcam-wrapper {
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .signlang_imagelist-container {
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+    .sign-selector-container {
+      top: 5px;
+      right: 5px;
+    }
+
+    .sign-selector-button {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      min-width: 120px;
+    }
+
+    .sign-selector-dropdown {
+      min-width: 200px;
+      max-width: 250px;
+      max-height: 300px;
+    }
+
+    .sign-selector-item {
+      padding: 0.6rem 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .signlang_webcam {
+        width: 100%;
+        height: fit-content;
+    }
+      
+    .signlang_canvas {
+        width: 100%;
+        height: fit-content;
+    }
+
+    .signlang_image-div {
+        width: fit-content;
+        height: 300px;
+    }
+
+    .signlang_image-div img {
+        width: 200px;
+        height: 150px;
+    }
+
+    .sign-name-label {
+      font-size: 1.5rem;
+    }
+
+    .signlang_imagelist-container h3 {
+      text-align: center;
+    }
+
+    .signlang_data-container .signlang_data {
+      padding: 0 0.5rem;
+    }
+
+    .signlang_data-container p {
+      font-size: 18px;
+      width: auto;
+    }
+
+    .signlang_controls-row {
+      gap: 0.75rem;
+    }
+
+    .gesture_output-wrapper {
+      gap: 0.5rem;
+    }
+
+    .signlang_detection_notLoggedIn p{
+      font-size: 0.8rem;
+      width: 100%;
+    }
+    
+
+  }
+  

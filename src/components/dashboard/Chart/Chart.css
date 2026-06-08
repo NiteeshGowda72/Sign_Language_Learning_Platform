@@ -1,0 +1,33 @@
+.signlang_chart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.signlang_chart h2{
+   margin-bottom: 1.5rem;
+   margin-top: 0;
+   padding-top: 0;
+   font-family: var(--font-family);
+   text-align: center;
+   width: 100%;
+}
+
+
+@media screen and (max-width: 500px){
+    .signlang_chart{
+       width: 100% !important;
+    }
+
+    .signlang_chart .bar-chart{
+      width: 100% !important;
+      height: 180px !important;
+    }
+
+    .signlang_chart h2{
+        text-align: center;
+    }
+}

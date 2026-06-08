@@ -1,0 +1,53 @@
+/* Speech Component Styles */
+
+.speech-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: var(--color-bg, #f5f5f5);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.speech-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.speech_notLoggedIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 2rem;
+}
+
+.speech_notLoggedIn h1 {
+  letter-spacing: 5px;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.speech_notLoggedIn p {
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  width: 60%;
+  letter-spacing: 2px;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+/* Responsive design */
+@media screen and (max-width: 550px) {
+  .speech_notLoggedIn p {
+    font-size: 0.8rem;
+    width: 100%;
+  }
+}
+

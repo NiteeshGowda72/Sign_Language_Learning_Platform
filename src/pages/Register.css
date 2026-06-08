@@ -1,0 +1,261 @@
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #040C18;
+  padding: 2rem 1rem;
+}
+
+.register-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1200px;
+  width: 100%;
+  background: #040C18;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  min-height: 600px;
+}
+
+.register-left {
+  background: #040C18;
+  padding: 4rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+}
+
+.register-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.register-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.95;
+  margin-top: 1rem;
+  color: #81AFDD;
+}
+
+.register-right {
+  padding: 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #040C18;
+}
+
+.register-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.password-hint {
+  font-weight: 400;
+  color: #81AFDD;
+}
+
+.optional {
+  font-weight: 400;
+  color: #81AFDD;
+  font-size: 0.8rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #042c54;
+  border-radius: 6px;
+  background: #031B34;
+  color: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+  color: #81AFDD;
+  opacity: 0.6;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #81AFDD;
+  box-shadow: 0 0 0 3px rgba(129, 175, 221, 0.1);
+}
+
+.form-group input.input-error {
+  border-color: #d1242f;
+}
+
+.form-group input.input-error:focus {
+  border-color: #d1242f;
+  box-shadow: 0 0 0 3px rgba(209, 36, 47, 0.1);
+}
+
+.error-message {
+  display: block;
+  font-size: 0.875rem;
+  color: #d1242f;
+  margin-top: 0.5rem;
+}
+
+.submit-error {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(209, 36, 47, 0.1);
+  border: 1px solid #d1242f;
+  border-radius: 6px;
+  color: #ff6b7a;
+}
+
+.register-button {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #2da44e;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.register-button:hover:not(:disabled) {
+  background: #2c974b;
+}
+
+.register-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #81AFDD;
+}
+
+.register-divider::before,
+.register-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.register-divider span {
+  padding: 0 1rem;
+  font-size: 0.875rem;
+}
+
+.google-button {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background: #031B34;
+  border: 1px solid #042c54;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.google-button:hover:not(:disabled) {
+  background: #042c54;
+}
+
+.google-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.google-icon {
+  flex-shrink: 0;
+}
+
+.register-footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #81AFDD;
+}
+
+.register-link {
+  color: #81AFDD;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 968px) {
+  .register-wrapper {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .register-left {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .register-title {
+    font-size: 2rem;
+  }
+
+  .register-right {
+    padding: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .register-container {
+    padding: 1rem;
+  }
+
+  .register-left {
+    padding: 1.5rem;
+  }
+
+  .register-title {
+    font-size: 1.75rem;
+  }
+
+  .register-description {
+    font-size: 1rem;
+  }
+
+  .register-right {
+    padding: 1.5rem;
+  }
+}
+

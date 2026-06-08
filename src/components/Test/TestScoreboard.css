@@ -1,0 +1,149 @@
+/* Scoreboard Table */
+.test-scoreboard {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+  background: rgba(20, 20, 30, 0.95);
+  border-radius: 8px;
+  border: 1px solid rgba(129, 175, 221, 0.3);
+  padding: 1rem;
+}
+
+.test-scoreboard-title {
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.test-scoreboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  display: table;
+  table-layout: fixed;
+  min-height: 0;
+}
+
+.test-scoreboard-table thead {
+  background: rgba(129, 175, 221, 0.15);
+  border-bottom: 2px solid rgba(129, 175, 221, 0.5);
+}
+
+.test-scoreboard-table th {
+  padding: 0.5rem 0.75rem;
+  font-weight: 700;
+  color: #81AFDD;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+  border-bottom: 2px solid rgba(129, 175, 221, 0.3);
+  width: 33.33%;
+}
+
+.test-scoreboard-table th:nth-child(1) {
+  text-align: left;
+}
+
+.test-scoreboard-table th:nth-child(2) {
+  text-align: center;
+}
+
+.test-scoreboard-table th:nth-child(3) {
+  text-align: center;
+}
+
+.test-scoreboard-table tbody {
+  display: table-row-group;
+}
+
+.test-scoreboard-table tbody tr {
+  display: table-row;
+  transition: background 0.2s ease;
+}
+
+.test-scoreboard-table td {
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text);
+  border-bottom: 1px solid rgba(129, 175, 221, 0.1);
+  width: 33.33%;
+}
+
+.test-scoreboard-table tbody tr:hover {
+  background: rgba(129, 175, 221, 0.1);
+}
+
+.test-scoreboard-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.test-table-sign {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: left;
+}
+
+.test-table-accuracy {
+  font-size: 0.75rem;
+  color: #81AFDD;
+  font-weight: 600;
+  text-align: center;
+}
+
+.test-table-result {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.test-table-result.correct {
+  color: #22c55e;
+}
+
+.test-table-result.almost {
+  color: #f59e0b;
+}
+
+.test-table-result.incorrect {
+  color: #ef4444;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  /* Maintain spacing on mobile but adjust for smaller screens */
+  .test-scoreboard {
+    margin: 0.5rem 0 2rem 0; /* Reduced but still maintains clear separation */
+  }
+
+  .test-scoreboard-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .test-scoreboard-table th,
+  .test-scoreboard-table td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+}
+
