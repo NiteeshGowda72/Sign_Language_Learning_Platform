@@ -50,6 +50,7 @@ const Detect = ({ onRecognize }) => {
   const [practiceStarted, setPracticeStarted] = useState(false); // Track if practice has started
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
+  const [cameraError, setCameraError] = useState("");
   const [modelStatus, setModelStatus] = useState("loading");
   const [modelError, setModelError] = useState("");
 
@@ -1138,7 +1139,22 @@ const Detect = ({ onRecognize }) => {
                 audio={false}
                 ref={webcamRef}
                 className="signlang_webcam"
+                onUserMedia={() => setCameraError("")}
+                onUserMediaError={() =>
+                  setCameraError(
+                    "Unable to access the camera. Please allow camera permission and try again."
+                  )
+                }
               />
+
+              {cameraError && (
+                <p
+                  className="model-status model-status-error"
+                  role="alert"
+                >
+                  {cameraError}
+                </p>
+              )}
 
               <canvas ref={canvasRef} className="signlang_canvas" />
 
