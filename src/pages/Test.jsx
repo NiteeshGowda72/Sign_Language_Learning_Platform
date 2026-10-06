@@ -20,6 +20,10 @@ import TestScoreboard from "../components/Test/TestScoreboard";
 import TestActions from "../components/Test/TestActions";
 import "./Test.css";
 import gestureModel from "../assests/sign_language_recognizer_25-04-2025.task";
+import {
+  MEDIAPIPE_WASM_URL,
+  GESTURE_RECOGNIZER_OPTIONS,
+} from "../config/vision";
 
 let startTime = "";
 
@@ -62,7 +66,8 @@ const Test = ({ onRecognize }) => {
     }
   }, [location.state]);
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
-  const [runningMode, setRunningMode] = useState("IMAGE");
+  const [modelStatus, setModelStatus] = useState("loading");
+  const [modelError, setModelError] = useState("");
 
   // Detection state
   const [gestureOutput, setGestureOutput] = useState("");
@@ -1094,11 +1099,6 @@ const Test = ({ onRecognize }) => {
     }
 
     // Switch to VIDEO mode if needed
-    if (runningMode === "IMAGE") {
-      setRunningMode("VIDEO");
-      gestureRecognizer.setOptions({ runningMode: "VIDEO" });
-    }
-
     let nowInMs = Date.now();
     const results = gestureRecognizer.recognizeForVideo(
       webcamRef.current.video,
@@ -1251,8 +1251,7 @@ const Test = ({ onRecognize }) => {
    * Enable/Disable camera
    */
   const enableCam = useCallback(() => {
-    if (!gestureRecognizer) {
-      alert("Please wait for gestureRecognizer to load");
+    if (modelStatus !== "ready" || !gestureRecognizer) {
       return;
     }
 
@@ -1406,6 +1405,7 @@ const Test = ({ onRecognize }) => {
   }, [
     webcamRunning,
     gestureRecognizer,
+    modelStatus,
     animate,
     detectedData,
     user?.name,
@@ -1421,24 +1421,31 @@ const Test = ({ onRecognize }) => {
   useEffect(() => {
     async function loadGestureRecognizer() {
       try {
+        setModelStatus("loading");
+        setModelError("");
+
         const vision = await FilesetResolver.forVisionTasks(
-          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+          MEDIAPIPE_WASM_URL
         );
 
         const recognizer = await GestureRecognizer.createFromOptions(vision, {
           baseOptions: {
             modelAssetPath: gestureModel,
           },
-          numHands: 2,
-          runningMode: runningMode,
+          ...GESTURE_RECOGNIZER_OPTIONS,
         });
+
         setGestureRecognizer(recognizer);
+        setModelStatus("ready");
       } catch (error) {
         console.error("Error loading gesture recognizer:", error);
+        setModelStatus("error");
+        setModelError("Unable to load the sign recognition model.");
       }
     }
+
     loadGestureRecognizer();
-  }, [runningMode]);
+  }, []);
 
   /**
    * Cleanup on unmount
@@ -1680,6 +1687,18 @@ const Test = ({ onRecognize }) => {
 
                 {/* Control Panel - Start/Repeat button, Confidence, and Timer */}
                 <div className="test-control-panel">
+                  {modelStatus === "loading" && (
+                    <p className="model-status">
+                      Loading sign recognition model...
+                    </p>
+                  )}
+
+                  {modelStatus === "error" && (
+                    <p className="model-status model-status-error">
+                      {modelError}
+                    </p>
+                  )}
+
                   <button
                     className="test-control-button-panel"
                     onClick={enableCam}

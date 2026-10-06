@@ -683,3 +683,12 @@ body:not(.test-page) .signlang_detection-container {
 
   }
   
+.model-status {
+  margin: 0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.model-status-error {
+  font-weight: 600;
+}
