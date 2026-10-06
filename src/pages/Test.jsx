@@ -20,6 +20,10 @@ import TestScoreboard from "../components/Test/TestScoreboard";
 import TestActions from "../components/Test/TestActions";
 import "./Test.css";
 import gestureModel from "../assests/sign_language_recognizer_25-04-2025.task";
+import {
+  MEDIAPIPE_WASM_URL,
+  GESTURE_RECOGNIZER_OPTIONS,
+} from "../config/vision";
 
 let startTime = "";
 
@@ -62,7 +66,6 @@ const Test = ({ onRecognize }) => {
     }
   }, [location.state]);
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
-  const [runningMode, setRunningMode] = useState("IMAGE");
 
   // Detection state
   const [gestureOutput, setGestureOutput] = useState("");
@@ -1094,11 +1097,6 @@ const Test = ({ onRecognize }) => {
     }
 
     // Switch to VIDEO mode if needed
-    if (runningMode === "IMAGE") {
-      setRunningMode("VIDEO");
-      gestureRecognizer.setOptions({ runningMode: "VIDEO" });
-    }
-
     let nowInMs = Date.now();
     const results = gestureRecognizer.recognizeForVideo(
       webcamRef.current.video,
@@ -1422,23 +1420,24 @@ const Test = ({ onRecognize }) => {
     async function loadGestureRecognizer() {
       try {
         const vision = await FilesetResolver.forVisionTasks(
-          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+          MEDIAPIPE_WASM_URL
         );
 
         const recognizer = await GestureRecognizer.createFromOptions(vision, {
           baseOptions: {
             modelAssetPath: gestureModel,
           },
-          numHands: 2,
-          runningMode: runningMode,
+          ...GESTURE_RECOGNIZER_OPTIONS,
         });
+
         setGestureRecognizer(recognizer);
       } catch (error) {
         console.error("Error loading gesture recognizer:", error);
       }
     }
+
     loadGestureRecognizer();
-  }, [runningMode]);
+  }, []);
 
   /**
    * Cleanup on unmount
