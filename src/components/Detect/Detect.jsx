@@ -21,6 +21,7 @@ import gestureModel from "../../assests/sign_language_recognizer_25-04-2025.task
 import {
   MEDIAPIPE_WASM_URL,
   GESTURE_RECOGNIZER_OPTIONS,
+  MIN_GESTURE_CONFIDENCE,
 } from "../../config/vision";
 
 let startTime = "";
@@ -491,12 +492,12 @@ const Detect = ({ onRecognize }) => {
     const signMatches = currentSignName && detectedSignName && detectedSignName === currentSignName;
 
     // Debug logging
-    if (confidence >= 50 && gestureOutput) {
+    if (confidence >= MIN_GESTURE_CONFIDENCE && gestureOutput) {
       console.log('Timer check - confidence:', confidence, 'currentSign:', currentSignName, 'detectedSign:', detectedSignName, 'matches:', signMatches, 'timerStarted:', timerStartedRef.current, 'webcamRunning:', webcamRunning);
     }
 
     // If confidence drops below 50% AND timer has started, restart the timer
-    if (confidence < 50 && timerStartedRef.current && webcamRunning) {
+    if (confidence < MIN_GESTURE_CONFIDENCE && timerStartedRef.current && webcamRunning) {
       console.log('Confidence dropped below 50% during timer - restarting timer');
       // Clear the interval
       if (intervalRef.current) {
@@ -521,7 +522,7 @@ const Detect = ({ onRecognize }) => {
     // 3. Webcam is running
     // 4. Sign matches current image
     // 5. Sign is NOT completed
-    if (confidence >= 50 && !timerStartedRef.current && webcamRunning && gestureOutput && signMatches && !isCompleted) {
+    if (confidence >= MIN_GESTURE_CONFIDENCE && !timerStartedRef.current && webcamRunning && gestureOutput && signMatches && !isCompleted) {
       console.log('Timer starting - confidence:', confidence, 'sign:', gestureOutput, 'currentImage:', currentImage?.name, 'currentImageNameRef:', currentImageNameRef.current);
       timerStartedRef.current = true;
       startTimeRef.current = Date.now();
@@ -550,7 +551,7 @@ const Detect = ({ onRecognize }) => {
         }
 
         // Check confidence on each interval - restart if drops below 50%
-        if (confidenceRef.current < 50) {
+        if (confidenceRef.current < MIN_GESTURE_CONFIDENCE) {
           console.log('Confidence dropped below 50% during timer interval - restarting timer');
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
@@ -622,7 +623,7 @@ const Detect = ({ onRecognize }) => {
           moveToNextSign();
         }
       }, 50); // Update every 50ms for smooth countdown
-    } else if (confidence < 50 && !timerStartedRef.current) {
+    } else if (confidence < MIN_GESTURE_CONFIDENCE && !timerStartedRef.current) {
       // Reset if confidence is below 50% and timer hasn't started
       // Also reset if sign doesn't match (even if confidence is high)
       const currentSignName = currentImageNameRef.current || currentImage?.name?.toUpperCase();
@@ -640,7 +641,7 @@ const Detect = ({ onRecognize }) => {
         startTimeRef.current = null;
         hasSpokenRef.current = false;
         setCountdownNumber(null);
-      } else if (confidence < 50 && !timerStartedRef.current) {
+      } else if (confidence < MIN_GESTURE_CONFIDENCE && !timerStartedRef.current) {
         // Confidence dropped below 50% and timer hasn't started
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
@@ -1216,7 +1217,7 @@ const Detect = ({ onRecognize }) => {
                           <p
                             style={{
                               fontSize: "0.875rem",
-                              color: confidence >= 50 ? "#4ade80" : "#81AFDD",
+                              color: confidence >= MIN_GESTURE_CONFIDENCE ? "#4ade80" : "#81AFDD",
                               marginTop: "0.25rem",
                               textAlign: "center",
                             }}

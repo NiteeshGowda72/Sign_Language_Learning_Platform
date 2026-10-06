@@ -5,3 +5,5 @@ export const GESTURE_RECOGNIZER_OPTIONS = {
   numHands: 2,
   runningMode: "VIDEO",
 };
+
+export const MIN_GESTURE_CONFIDENCE = 50;
