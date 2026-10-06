@@ -987,6 +987,15 @@ const Detect = ({ onRecognize }) => {
     dispatch,
   ]);
 
+  // Dispose the MediaPipe recognizer when it is replaced or unmounted.
+  useEffect(() => {
+    return () => {
+      if (gestureRecognizer) {
+        gestureRecognizer.close();
+      }
+    };
+  }, [gestureRecognizer]);
+
   /**
    * Load gesture recognizer model
    */
