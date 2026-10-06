@@ -50,6 +50,8 @@ const Detect = ({ onRecognize }) => {
   const [practiceStarted, setPracticeStarted] = useState(false); // Track if practice has started
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
+  const [modelStatus, setModelStatus] = useState("loading");
+  const [modelError, setModelError] = useState("");
 
   // Reset to instructions screen when navigating from sidebar
   useEffect(() => {
@@ -818,7 +820,6 @@ const Detect = ({ onRecognize }) => {
     }
   }, [
     webcamRunning,
-    runningMode,
     gestureRecognizer,
     currentImage,
     onRecognize,
@@ -837,8 +838,7 @@ const Detect = ({ onRecognize }) => {
    * Enable/Disable camera
    */
   const enableCam = useCallback(() => {
-    if (!gestureRecognizer) {
-      alert("Please wait for gestureRecognizer to load");
+    if (modelStatus !== "ready" || !gestureRecognizer) {
       return;
     }
 
@@ -979,6 +979,7 @@ const Detect = ({ onRecognize }) => {
   }, [
     webcamRunning,
     gestureRecognizer,
+    modelStatus,
     animate,
     detectedData,
     user?.name,
@@ -992,6 +993,9 @@ const Detect = ({ onRecognize }) => {
   useEffect(() => {
     async function loadGestureRecognizer() {
       try {
+        setModelStatus("loading");
+        setModelError("");
+
         const vision = await FilesetResolver.forVisionTasks(
           MEDIAPIPE_WASM_URL
         );
@@ -1004,8 +1008,11 @@ const Detect = ({ onRecognize }) => {
         });
 
         setGestureRecognizer(recognizer);
+        setModelStatus("ready");
       } catch (error) {
         console.error("Error loading gesture recognizer:", error);
+        setModelStatus("error");
+        setModelError("Unable to load the sign recognition model.");
       }
     }
 
@@ -1157,6 +1164,17 @@ const Detect = ({ onRecognize }) => {
 
               <div className="signlang_data-container">
                 <div className="signlang_controls-row">
+                  {modelStatus === "loading" && (
+                    <p className="model-status">
+                      Loading sign recognition model...
+                    </p>
+                  )}
+
+                  {modelStatus === "error" && (
+                    <p className="model-status model-status-error">
+                      {modelError}
+                    </p>
+                  )}
                   <button
                     onClick={enableCam}
                     type="button"
