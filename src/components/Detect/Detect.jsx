@@ -1183,13 +1183,21 @@ const Detect = ({ onRecognize }) => {
               <div className="signlang_data-container">
                 <div className="signlang_controls-row">
                   {modelStatus === "loading" && (
-                    <p className="model-status">
+                    <p
+                      className="model-status"
+                      role="status"
+                      aria-live="polite"
+                    >
                       Loading sign recognition model...
                     </p>
                   )}
 
                   {modelStatus === "error" && (
-                    <p className="model-status model-status-error">
+                    <p
+                      className="model-status model-status-error"
+                      role="alert"
+                      aria-live="assertive"
+                    >
                       {modelError}
                     </p>
                   )}

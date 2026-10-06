@@ -1703,13 +1703,21 @@ const Test = ({ onRecognize }) => {
                 {/* Control Panel - Start/Repeat button, Confidence, and Timer */}
                 <div className="test-control-panel">
                   {modelStatus === "loading" && (
-                    <p className="model-status">
+                    <p
+                      className="model-status"
+                      role="status"
+                      aria-live="polite"
+                    >
                       Loading sign recognition model...
                     </p>
                   )}
 
                   {modelStatus === "error" && (
-                    <p className="model-status model-status-error">
+                    <p
+                      className="model-status model-status-error"
+                      role="alert"
+                      aria-live="assertive"
+                    >
                       {modelError}
                     </p>
                   )}
