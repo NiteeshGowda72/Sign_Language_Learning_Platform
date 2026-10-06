@@ -1470,15 +1470,7 @@ const Test = ({ onRecognize }) => {
     };
   }, []);
 
-  // Suppress console logs in production
-  if (
-    process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "production"
-  ) {
-    console.log = function () { };
-  }
-
-  // Handle Start Practice button click
+// Handle Start Practice button click
   const handleStartPractice = () => {
     generateRandomSigns();
     setPracticeStarted(true);
