@@ -66,6 +66,8 @@ const Test = ({ onRecognize }) => {
     }
   }, [location.state]);
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
+  const [modelStatus, setModelStatus] = useState("loading");
+  const [modelError, setModelError] = useState("");
 
   // Detection state
   const [gestureOutput, setGestureOutput] = useState("");
@@ -1249,8 +1251,7 @@ const Test = ({ onRecognize }) => {
    * Enable/Disable camera
    */
   const enableCam = useCallback(() => {
-    if (!gestureRecognizer) {
-      alert("Please wait for gestureRecognizer to load");
+    if (modelStatus !== "ready" || !gestureRecognizer) {
       return;
     }
 
@@ -1404,6 +1405,7 @@ const Test = ({ onRecognize }) => {
   }, [
     webcamRunning,
     gestureRecognizer,
+    modelStatus,
     animate,
     detectedData,
     user?.name,
@@ -1419,6 +1421,9 @@ const Test = ({ onRecognize }) => {
   useEffect(() => {
     async function loadGestureRecognizer() {
       try {
+        setModelStatus("loading");
+        setModelError("");
+
         const vision = await FilesetResolver.forVisionTasks(
           MEDIAPIPE_WASM_URL
         );
@@ -1431,8 +1436,11 @@ const Test = ({ onRecognize }) => {
         });
 
         setGestureRecognizer(recognizer);
+        setModelStatus("ready");
       } catch (error) {
         console.error("Error loading gesture recognizer:", error);
+        setModelStatus("error");
+        setModelError("Unable to load the sign recognition model.");
       }
     }
 
@@ -1679,6 +1687,18 @@ const Test = ({ onRecognize }) => {
 
                 {/* Control Panel - Start/Repeat button, Confidence, and Timer */}
                 <div className="test-control-panel">
+                  {modelStatus === "loading" && (
+                    <p className="model-status">
+                      Loading sign recognition model...
+                    </p>
+                  )}
+
+                  {modelStatus === "error" && (
+                    <p className="model-status model-status-error">
+                      {modelError}
+                    </p>
+                  )}
+
                   <button
                     className="test-control-button-panel"
                     onClick={enableCam}
