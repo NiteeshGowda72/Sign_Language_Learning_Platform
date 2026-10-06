@@ -76,7 +76,7 @@ Modern web browser with webcam access
    Create a `.env` file in the root directory with the following variables:
    ```
    REACT_APP_SUPABASE_URL=your_supabase_url
-   REACT_APP_SUPABASE_KEY=your_supabase_anon_key
+   REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
    REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id
    ```
 
@@ -213,3 +213,18 @@ Special thanks to the open-source community for the tools and libraries that mad
 - MediaPipe: https://developers.google.com/mediapipe
 - Supabase: https://supabase.com/
 - Google OAuth: https://developers.google.com/identity/protocols/oauth2
+
+## MediaPipe Runtime Configuration
+
+The application uses a pinned MediaPipe Tasks Vision runtime matching the
+installed `@mediapipe/tasks-vision` dependency.
+
+The runtime URL is centralized in:
+
+`src/config/vision.js`
+
+This avoids relying on a moving `@latest` CDN runtime.
+
+The sign recognition model is loaded from:
+
+`src/assests/sign_language_recognizer_25-04-2025.task`
