@@ -56,6 +56,7 @@ const Test = ({ onRecognize }) => {
   // Core state
   const [practiceStarted, setPracticeStarted] = useState(false); // Track if practice has started
   const [webcamRunning, setWebcamRunning] = useState(false);
+  const [cameraError, setCameraError] = useState("");
 
   // Reset to instructions screen when navigating from sidebar
   useEffect(() => {
@@ -1661,7 +1662,19 @@ const Test = ({ onRecognize }) => {
                   audio={false}
                   ref={webcamRef}
                   className="signlang_webcam"
+                  onUserMedia={() => setCameraError("")}
+                  onUserMediaError={() =>
+                    setCameraError(
+                      "Unable to access your camera. Please allow camera permission and try again."
+                    )
+                  }
                 />
+
+                {cameraError && (
+                  <div role="alert" className="camera-error">
+                    {cameraError}
+                  </div>
+                )}
 
                 <canvas ref={canvasRef} className="signlang_canvas" />
 
