@@ -1234,7 +1234,6 @@ const Test = ({ onRecognize }) => {
     }
   }, [
     webcamRunning,
-    runningMode,
     gestureRecognizer,
     currentImage,
     onRecognize,
