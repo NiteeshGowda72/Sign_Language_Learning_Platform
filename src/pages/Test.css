@@ -1587,3 +1587,15 @@
     font-size: 2rem;
   }
 }
+
+.camera-error {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  color: #b91c1c;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
