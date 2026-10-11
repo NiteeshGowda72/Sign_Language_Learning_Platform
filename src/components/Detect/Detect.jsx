@@ -1002,6 +1002,8 @@ const Detect = ({ onRecognize }) => {
    * Load gesture recognizer model
    */
   useEffect(() => {
+    let isActive = true;
+
     async function loadGestureRecognizer() {
       try {
         setModelStatus("loading");
@@ -1018,9 +1020,18 @@ const Detect = ({ onRecognize }) => {
           ...GESTURE_RECOGNIZER_OPTIONS,
         });
 
+        if (!isActive) {
+          recognizer.close();
+          return;
+        }
+
         setGestureRecognizer(recognizer);
         setModelStatus("ready");
       } catch (error) {
+        if (!isActive) {
+          return;
+        }
+
         console.error("Error loading gesture recognizer:", error);
         setModelStatus("error");
         setModelError("Unable to load the sign recognition model.");
@@ -1028,6 +1039,10 @@ const Detect = ({ onRecognize }) => {
     }
 
     loadGestureRecognizer();
+
+    return () => {
+      isActive = false;
+    };
   }, []);
 
   /**
