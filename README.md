@@ -1,10 +1,10 @@
 # Sign Language Learning and Practice Platform
 
-A real-time sign language recognition application built with React and MediaPipe that enables users to learn, practice, and test their sign language skills. This platform uses advanced machine learning algorithms to recognize American Sign Language (ASL) gestures in real-time through webcam input.
+A web-based sign language learning application built with React and MediaPipe. The platform uses webcam input to recognize supported hand gestures and provides practice and test workflows with visual feedback. Its goal is to make sign-language practice interactive and accessible through a browser.
 
 ## Overview
 
-This application revolutionizes sign language communication by providing an interactive learning platform for people of all ages and skill levels. The platform recognizes 26 alphabets and 16 commonly used ASL words with high accuracy through real-time gesture detection and instant visual feedback.
+The application combines browser-based webcam capture, MediaPipe gesture recognition, and interactive learning workflows. The bundled gesture-recognition model is intended to recognize 41 configured classes: 25 alphabet entries (A–Y, excluding Z) and 16 word/sign classes. Recognition results depend on the supported classes, camera conditions, hand positioning, and model performance. No accuracy percentage is claimed here because a reproducible evaluation result has not been documented.
 
 ## Key Features
 
@@ -12,17 +12,17 @@ Real-Time Gesture Recognition: Instantaneous recognition of hand gestures using 
 
 Interactive Learning System: Three-tier learning approach with guided instruction, hands-on practice, and assessment testing.
 
-Real-Time Progress Tracking: Comprehensive dashboard showing total signs practiced, test scores, and performance metrics.
+Progress Dashboard: View practice activity and available progress statistics.
 
-Adaptive Learning: Smart detection system that improves recognition accuracy through continuous learning and user interaction.
+Recognition Feedback: Displays gesture-recognition results and confidence-related feedback to help users practice supported signs.
 
-User Authentication: Secure Google OAuth integration for personalized user accounts and progress tracking.
+User Authentication: Supports email/password authentication and Google sign-in through the configured authentication services.
 
-Confidence Scoring: Visual feedback showing detection confidence percentage to help users improve their technique.
+Confidence Feedback: Displays recognition confidence information to support practice and test workflows.
 
 Responsive Interface: Intuitive and accessible user interface designed for users of all technical skill levels.
 
-Performance Analytics: Detailed performance summaries with accuracy metrics, time tracking, and strength/weakness analysis.
+Practice and Test Results: The interface includes practice and test workflows, with progress or performance information where supported by the application.
 
 ## Technical Architecture
 
@@ -44,11 +44,11 @@ Google OAuth: Secure authentication and user identity management
 
 ## Machine Learning Framework
 
-MediaPipe: Google's powerful framework for building perception pipelines, providing pre-built hand tracking and gesture recognition models
+MediaPipe Tasks Vision: Runs the bundled gesture-recognition task in the browser
 
-Hand Detection: Dual-hand support for recognizing two-handed signs
+Hand Support: The recognizer is configured to process up to two hands
 
-Gesture Recognition: Custom-trained model recognizing 26 alphabets and 16 ASL words
+Gesture Classes: The bundled model is documented as containing 41 classes: 25 alphabet entries (A–Y, excluding Z) and 16 word/sign classes. These class counts describe the model labels, not a measured accuracy guarantee.
 
 ## Installation and Setup
 
@@ -63,8 +63,8 @@ Modern web browser with webcam access
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/NiteeshGowda72/sign-language-learning-platform.git
-   cd sign-language-learning-platform
+   git clone https://github.com/NiteeshGowda72/Sign_Language_Learning_Platform.git
+   cd Sign_Language_Learning_Platform
    ```
 
 2. Install dependencies
@@ -217,7 +217,8 @@ Special thanks to the open-source community for the tools and libraries that mad
 ## MediaPipe Runtime Configuration
 
 The application uses a pinned MediaPipe Tasks Vision runtime matching the
-installed `@mediapipe/tasks-vision` dependency.
+installed `@mediapipe/tasks-vision` dependency. The runtime and gesture-recognition
+options are centralized in `src/config/vision.js`.
 
 The runtime URL is centralized in:
 
