@@ -229,3 +229,25 @@ This avoids relying on a moving `@latest` CDN runtime.
 The sign recognition model is loaded from:
 
 `src/assests/sign_language_recognizer_25-04-2025.task`
+
+## Troubleshooting
+
+### Camera Access Issues
+
+- Allow camera access when prompted by your browser.
+- Check your browser's site permissions if camera access was previously denied.
+- Close other applications that may be using the camera and try again.
+- Use HTTPS in production or localhost during local development, as camera access generally requires a secure context.
+
+### Gesture Recognition Model Fails to Load
+
+- Check your internet connection because the MediaPipe WebAssembly runtime is loaded from a CDN.
+- Confirm that the gesture-recognition model asset is present at the configured path.
+- Reload the application and check the browser console for model-loading errors.
+- If the problem persists, verify that the configured MediaPipe runtime URL and model asset are accessible.
+
+### Recognition Performance Issues
+
+- Ensure your hand is clearly visible within the camera frame.
+- Try improving lighting and keeping your hand within the camera's field of view.
+- Close unnecessary applications or browser tabs if recognition performance is poor.
