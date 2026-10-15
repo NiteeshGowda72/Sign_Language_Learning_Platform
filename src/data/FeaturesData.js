@@ -24,11 +24,11 @@ export const featuresData = [
     text: "Our intuitive user interface is designed to be easy to use for people of all ages and skill levels, making it accessible to everyone.",
   },
   {
-    title: "Adaptive Learning",
-    text: "Our system uses adaptive learning to improve recognition accuracy over time, allowing for continuous improvement and increased efficiency.",
+    title: "Gesture Recognition",
+    text: "The application uses a trained MediaPipe gesture-recognition model to identify supported signs from camera input.",
   },
   {
-    title: "High Accuracy",
-    text: "With a high accuracy rate of over 80%, our system ensures that sign language communication is not only faster, but also more accurate.",
+    title: "Supported Signs",
+    text: "Practice the alphabet and word/sign classes supported by our recognition model. Results may vary with hand position, lighting, and camera quality.",
   }
 ];
