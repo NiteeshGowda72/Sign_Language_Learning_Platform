@@ -31,6 +31,18 @@ describe("createGestureRecognizer", () => {
     expect(GestureRecognizer.createFromOptions).not.toHaveBeenCalled();
   });
 
+  test.each([null, 123, "   "])(
+    "rejects an invalid model asset path: %p",
+    async (modelPath) => {
+      await expect(createGestureRecognizer(modelPath)).rejects.toThrow(
+        "A gesture model asset path is required."
+      );
+
+      expect(FilesetResolver.forVisionTasks).not.toHaveBeenCalled();
+      expect(GestureRecognizer.createFromOptions).not.toHaveBeenCalled();
+    }
+  );
+
   test("initializes MediaPipe with the configured model and options", async () => {
     const vision = { runtime: "mock-vision" };
     const recognizer = { close: jest.fn() };

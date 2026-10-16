@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Detect.css";
 import { v4 as uuidv4 } from "uuid";
-import { FilesetResolver, GestureRecognizer } from "@mediapipe/tasks-vision";
+import { createGestureRecognizer } from "../../utils/gestureRecognizer";
 import {
   drawConnectors,
   drawLandmarks,
@@ -19,8 +19,6 @@ import { useProgress } from "../../context/ProgressContext";
 import "../../pages/Test.css";
 import gestureModel from "../../assests/sign_language_recognizer_25-04-2025.task";
 import {
-  MEDIAPIPE_WASM_URL,
-  GESTURE_RECOGNIZER_OPTIONS,
   MIN_GESTURE_CONFIDENCE,
 } from "../../config/vision";
 
@@ -1009,16 +1007,7 @@ const Detect = ({ onRecognize }) => {
         setModelStatus("loading");
         setModelError("");
 
-        const vision = await FilesetResolver.forVisionTasks(
-          MEDIAPIPE_WASM_URL
-        );
-
-        const recognizer = await GestureRecognizer.createFromOptions(vision, {
-          baseOptions: {
-            modelAssetPath: gestureModel,
-          },
-          ...GESTURE_RECOGNIZER_OPTIONS,
-        });
+        const recognizer = await createGestureRecognizer(gestureModel);
 
         if (!isActive) {
           recognizer.close();
