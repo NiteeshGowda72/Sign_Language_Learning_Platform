@@ -11,7 +11,7 @@ import {
  * @returns {Promise<object>} Initialized gesture recognizer.
  */
 export async function createGestureRecognizer(modelAssetPath) {
-  if (!modelAssetPath) {
+  if (typeof modelAssetPath !== "string" || !modelAssetPath.trim()) {
     throw new Error("A gesture model asset path is required.");
   }
 
