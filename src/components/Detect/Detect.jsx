@@ -20,6 +20,7 @@ import { useProgress } from "../../context/ProgressContext";
 import "../../pages/Test.css";
 import gestureModel from "../../assests/sign_language_recognizer_25-04-2025.task";
 import {
+import { disposeRecognizer } from "../../utils/disposeRecognizer";
   MIN_GESTURE_CONFIDENCE,
 } from "../../config/vision";
 
@@ -991,9 +992,7 @@ const Detect = ({ onRecognize }) => {
   // Dispose the MediaPipe recognizer when it is replaced or unmounted.
   useEffect(() => {
     return () => {
-      if (gestureRecognizer) {
-        gestureRecognizer.close();
-      }
+      disposeRecognizer(gestureRecognizer);
     };
   }, [gestureRecognizer]);
 
@@ -1011,7 +1010,7 @@ const Detect = ({ onRecognize }) => {
         const recognizer = await createGestureRecognizer(gestureModel);
 
         if (!isActive) {
-          recognizer.close();
+          disposeRecognizer(recognizer);
           return;
         }
 
