@@ -18,6 +18,10 @@ describe("MediaPipe vision configuration", () => {
     });
   });
 
+  test("prevents accidental mutation of shared recognizer options", () => {
+    expect(Object.isFrozen(GESTURE_RECOGNIZER_OPTIONS)).toBe(true);
+  });
+
   test("uses a minimum gesture confidence threshold of 50", () => {
     expect(MIN_GESTURE_CONFIDENCE).toBe(50);
   });
