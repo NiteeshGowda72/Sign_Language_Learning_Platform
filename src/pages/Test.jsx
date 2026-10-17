@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../components/Detect/Detect.css";
 import { v4 as uuidv4 } from "uuid";
 import { createGestureRecognizer } from "../utils/gestureRecognizer";
+import { getCameraErrorMessage } from "../utils/cameraError";
 import {
   drawConnectors,
   drawLandmarks,
@@ -1667,11 +1668,7 @@ const Test = ({ onRecognize }) => {
                   ref={webcamRef}
                   className="signlang_webcam"
                   onUserMedia={() => setCameraError("")}
-                  onUserMediaError={() =>
-                    setCameraError(
-                      "Unable to access your camera. Please allow camera permission and try again."
-                    )
-                  }
+                  onUserMediaError={(error) => setCameraError(getCameraErrorMessage(error))}
                 />
 
                 {cameraError && (
