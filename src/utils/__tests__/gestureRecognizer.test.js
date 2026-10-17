@@ -91,4 +91,29 @@ describe("createGestureRecognizer", () => {
       createGestureRecognizer("/models/gesture.task")
     ).rejects.toBe(error);
   });
+
+  test("propagates a WASM resolver rejection value unchanged", async () => {
+    const rejection = "WASM resolver failed";
+    FilesetResolver.forVisionTasks.mockRejectedValue(rejection);
+
+    await expect(
+      createGestureRecognizer("/models/gesture.task")
+    ).rejects.toBe(rejection);
+
+    expect(GestureRecognizer.createFromOptions).not.toHaveBeenCalled();
+  });
+
+  test("propagates a model creation rejection value unchanged", async () => {
+    const vision = { runtime: "mock-vision" };
+    const rejection = "Model creation failed";
+
+    FilesetResolver.forVisionTasks.mockResolvedValue(vision);
+    GestureRecognizer.createFromOptions.mockRejectedValue(rejection);
+
+    await expect(
+      createGestureRecognizer("/models/gesture.task")
+    ).rejects.toBe(rejection);
+
+    expect(GestureRecognizer.createFromOptions).toHaveBeenCalledTimes(1);
+  });
 });
