@@ -23,4 +23,15 @@ describe("getCameraErrorMessage", () => {
       /check camera permissions/i
     );
   });
+
+  test.each([
+    ["undefined", undefined],
+    ["empty object", {}],
+    ["string input", "camera failure"],
+    ["numeric input", 42],
+  ])("handles unexpected input: %s", (_label, error) => {
+    expect(getCameraErrorMessage(error)).toMatch(
+      /check camera permissions/i
+    );
+  });
 });
