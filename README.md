@@ -251,3 +251,4 @@ The sign recognition model is loaded from:
 - Ensure your hand is clearly visible within the camera frame.
 - Try improving lighting and keeping your hand within the camera's field of view.
 - Close unnecessary applications or browser tabs if recognition performance is poor.
+
