@@ -22,9 +22,9 @@ import TestActions from "../components/Test/TestActions";
 import "./Test.css";
 import gestureModel from "../assests/sign_language_recognizer_25-04-2025.task";
 import {
-import { disposeRecognizer } from "../utils/disposeRecognizer";
   MIN_GESTURE_CONFIDENCE,
 } from "../config/vision";
+import { disposeRecognizer } from "../utils/disposeRecognizer";
 
 let startTime = "";
 
