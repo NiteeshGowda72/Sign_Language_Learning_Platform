@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./Detect.css";
 import { v4 as uuidv4 } from "uuid";
 import { createGestureRecognizer } from "../../utils/gestureRecognizer";
+import { getCameraErrorMessage } from "../../utils/cameraError";
 import {
   drawConnectors,
   drawLandmarks,
@@ -21,6 +22,7 @@ import gestureModel from "../../assests/sign_language_recognizer_25-04-2025.task
 import {
   MIN_GESTURE_CONFIDENCE,
 } from "../../config/vision";
+import { disposeRecognizer } from "../../utils/disposeRecognizer";
 
 let startTime = "";
 
@@ -990,9 +992,7 @@ const Detect = ({ onRecognize }) => {
   // Dispose the MediaPipe recognizer when it is replaced or unmounted.
   useEffect(() => {
     return () => {
-      if (gestureRecognizer) {
-        gestureRecognizer.close();
-      }
+      disposeRecognizer(gestureRecognizer);
     };
   }, [gestureRecognizer]);
 
@@ -1010,7 +1010,7 @@ const Detect = ({ onRecognize }) => {
         const recognizer = await createGestureRecognizer(gestureModel);
 
         if (!isActive) {
-          recognizer.close();
+          disposeRecognizer(recognizer);
           return;
         }
 
@@ -1145,11 +1145,7 @@ const Detect = ({ onRecognize }) => {
                 ref={webcamRef}
                 className="signlang_webcam"
                 onUserMedia={() => setCameraError("")}
-                onUserMediaError={() =>
-                  setCameraError(
-                    "Unable to access the camera. Please allow camera permission and try again."
-                  )
-                }
+                onUserMediaError={(error) => setCameraError(getCameraErrorMessage(error))}
               />
 
               {cameraError && (
