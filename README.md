@@ -54,6 +54,24 @@ Hand Support: The recognizer is configured to process up to two hands
 
 Gesture Classes: The bundled model is documented as containing 41 classes: 25 alphabet entries (A–Y, excluding Z) and 16 word/sign classes. These class counts describe the model labels, not a measured accuracy guarantee.
 
+## Gesture Recognition Workflow
+
+The platform uses a browser-based workflow to recognize supported hand gestures.
+
+1. **Camera Input:** The application requests webcam access to capture the user's hand movements.
+2. **Model Initialization:** The application initializes the MediaPipe gesture recognizer using the configured runtime and model options.
+3. **Gesture Inference:** Webcam input is processed by the bundled gesture-recognition model to identify supported gesture classes.
+4. **Recognition Feedback:** The interface presents recognition results to support the user's practice and test activities.
+5. **Learning Workflows:** Practice and test modes provide the interface through which users interact with gesture recognition.
+
+### Recognition Runtime
+
+The MediaPipe runtime URL and gesture-recognition options are centralized in `src/config/vision.js`. The bundled model is stored at:
+
+`src/assests/sign_language_recognizer_25-04-2025.task`
+
+The recognizer's configured classes describe which labels the model supports; they do not guarantee that every gesture will be recognized correctly. Recognition performance can vary with lighting, camera quality, hand positioning, and other input conditions.
+
 ## Installation and Setup
 
 ### Prerequisites
