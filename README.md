@@ -1,10 +1,14 @@
 # Sign Language Learning and Practice Platform
 
-A web-based sign language learning application built with React and MediaPipe. The platform uses webcam input to recognize supported hand gestures and provides practice and test workflows with visual feedback. Its goal is to make sign-language practice interactive and accessible through a browser.
+A browser-based sign language learning and practice platform built with React and MediaPipe. It uses webcam input to recognize supported hand gestures and provides interactive practice and test workflows with visual feedback.
+
+The project aims to make practicing supported signs more accessible through a web interface, combining real-time gesture recognition with learning activities.
 
 ## Overview
 
-The application combines browser-based webcam capture, MediaPipe gesture recognition, and interactive learning workflows. The bundled gesture-recognition model is intended to recognize 41 configured classes: 25 alphabet entries (A–Y, excluding Z) and 16 word/sign classes. Recognition results depend on the supported classes, camera conditions, hand positioning, and model performance. No accuracy percentage is claimed here because a reproducible evaluation result has not been documented.
+The application brings together webcam capture, MediaPipe gesture recognition, and practice and assessment workflows. The bundled gesture-recognition model is configured for 41 classes: 25 alphabet entries (A–Y, excluding Z) and 16 word/sign classes.
+
+Recognition depends on the supported model classes, camera conditions, hand positioning, and model performance. These class counts describe the configured labels; they do not represent a measured accuracy score. No accuracy percentage is claimed because a reproducible evaluation result has not been documented.
 
 ## Key Features
 
