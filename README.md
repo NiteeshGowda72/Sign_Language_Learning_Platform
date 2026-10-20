@@ -236,6 +236,36 @@ Special thanks to the open-source community for the tools and libraries that mad
 - Supabase: https://supabase.com/
 - Google OAuth: https://developers.google.com/identity/protocols/oauth2
 
+## Development and Troubleshooting Guide
+
+### Before Running the Application
+
+- Install Node.js and npm.
+- Clone the repository and run `npm install` from the project directory.
+- Configure the Supabase and Google OAuth environment variables required by your application.
+- Start the development server with `npm start`.
+- Open the application in a supported browser and grant camera access when prompted.
+
+### Camera Troubleshooting
+
+If the webcam does not start:
+
+1. Check that the browser has permission to access the camera.
+2. Verify that the camera is connected and is not being exclusively used by another application.
+3. Check the browser console for camera access errors.
+4. Use `localhost` for local development or HTTPS for deployed environments where secure-context camera access is required.
+
+### Gesture Model Troubleshooting
+
+If gesture recognition does not initialize:
+
+1. Verify that the bundled model exists at `src/assests/sign_language_recognizer_25-04-2025.task`.
+2. Check `src/config/vision.js` for the configured MediaPipe runtime URL and recognizer options.
+3. Inspect the browser console for model-loading or MediaPipe initialization errors.
+4. Confirm that the model path and runtime configuration match the application's current implementation.
+
+Recognition may vary with lighting, camera quality, hand positioning, and the gestures supported by the bundled model.
+
 ## MediaPipe Runtime Configuration
 
 The application uses a pinned MediaPipe Tasks Vision runtime matching the
