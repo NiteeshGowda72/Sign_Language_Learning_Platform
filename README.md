@@ -223,6 +223,14 @@ The model training file is located in the root folder. The pre-trained gesture r
 
 Model File: `src/assests/sign_language_recognizer_25-04-2025.task`
 
+## Current Limitations
+
+- **Supported gestures:** Recognition is limited to the classes supported by the bundled gesture-recognition model.
+- **Recognition variability:** Results can vary with lighting, camera quality, hand positioning, and how clearly a gesture is performed.
+- **Camera permissions:** Webcam-based features require browser camera access and an appropriate secure context.
+- **Model evaluation:** The documented class count does not establish recognition accuracy. Reliable accuracy claims require evaluation against a representative, independently tested dataset.
+- **Runtime requirements:** Gesture recognition depends on successful initialization of the configured MediaPipe runtime and bundled model.
+
 ## License
 
 This project is provided as-is for educational and research purposes.
