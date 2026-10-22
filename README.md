@@ -223,6 +223,19 @@ The model training file is located in the root folder. The pre-trained gesture r
 
 Model File: `src/assests/sign_language_recognizer_25-04-2025.task`
 
+## User Journey
+
+The platform provides a browser-based workflow for learning and practicing supported sign language gestures.
+
+1. **Access the application:** Open the platform in a supported browser.
+2. **Authenticate:** Use the configured email/password or Google sign-in option, where available.
+3. **Explore learning modes:** Navigate to the available practice or test workflows.
+4. **Practice gestures:** Follow the interface prompts and use webcam-based gesture recognition to receive feedback for supported signs.
+5. **Complete assessments:** Use the test workflow to interact with the configured assessment activities.
+6. **Review progress:** Visit the dashboard or profile to view the activity and progress information provided by the application.
+
+Available screens, authentication options, and progress information depend on the application's current implementation and configuration.
+
 ## Current Limitations
 
 - **Supported gestures:** Recognition is limited to the classes supported by the bundled gesture-recognition model.
