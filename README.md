@@ -325,3 +325,26 @@ The sign recognition model is loaded from:
 - Try improving lighting and keeping your hand within the camera's field of view.
 - Close unnecessary applications or browser tabs if recognition performance is poor.
 
+## Testing and Quality Assurance
+
+Automated tests help verify application behavior and reduce regressions during development.
+
+### Run the Test Suite
+
+Run the automated tests in non-interactive CI mode:
+
+```bash
+CI=true npm test -- --watchAll=false
+```
+
+The current test suite includes coverage for MediaPipe vision configuration, gesture recognizer initialization, camera error handling, and recognizer resource disposal.
+
+### Check the Production Build
+
+Create a production build with:
+
+```bash
+npm run build
+```
+
+Review build warnings and errors before deployment. A successful test run does not guarantee that every browser, camera, or gesture-recognition scenario works correctly.
