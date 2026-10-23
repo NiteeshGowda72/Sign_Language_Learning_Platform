@@ -236,6 +236,19 @@ The platform provides a browser-based workflow for learning and practicing suppo
 
 Available screens, authentication options, and progress information depend on the application's current implementation and configuration.
 
+
+## Future Improvements
+
+Potential areas for future development include:
+
+- **Recognition evaluation:** Evaluate the gesture-recognition model on a representative dataset and document reproducible performance metrics.
+- **Expanded gesture support:** Explore adding more signs and gestures beyond the classes currently supported by the bundled model.
+- **Recognition robustness:** Investigate how lighting, camera quality, and hand positioning affect recognition performance.
+- **Accessibility:** Continue improving instructions, feedback, and navigation for users with different accessibility needs.
+- **Automated testing:** Expand test coverage for camera errors, model initialization, and important user workflows.
+- **User experience:** Explore improvements to learning progress summaries and practice feedback.
+
+These are proposed improvements, not claims about features currently implemented in the application.
 ## Current Limitations
 
 - **Supported gestures:** Recognition is limited to the classes supported by the bundled gesture-recognition model.
