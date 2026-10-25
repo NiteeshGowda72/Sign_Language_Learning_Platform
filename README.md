@@ -265,6 +265,10 @@ Contributions that improve the platform are welcome. Before proposing a change, 
 
 This project is provided as-is for educational and research purposes.
 
+## Contact and Support
+
+For project-related questions or technical issues, open an issue in the GitHub repository with a clear description of the problem and steps to reproduce it, where applicable.
+
 ## Acknowledgements
 
 Special thanks to the open-source community for the tools and libraries that made this project possible.
