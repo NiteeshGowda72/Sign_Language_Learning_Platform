@@ -249,6 +249,10 @@ Potential areas for future development include:
 - **User experience:** Explore improvements to learning progress summaries and practice feedback.
 
 These are proposed improvements, not claims about features currently implemented in the application.
+## Contributing
+
+Contributions that improve the platform are welcome. Before proposing a change, review the existing implementation, test relevant functionality, and describe the purpose of your changes clearly.
+
 ## Current Limitations
 
 - **Supported gestures:** Recognition is limited to the classes supported by the bundled gesture-recognition model.
