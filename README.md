@@ -253,6 +253,10 @@ These are proposed improvements, not claims about features currently implemented
 
 Contributions that improve the platform are welcome. Before proposing a change, review the existing implementation, test relevant functionality, and describe the purpose of your changes clearly.
 
+## Code Quality and Maintenance
+
+Keep changes focused and consistent with the existing project structure. Test affected functionality before submitting changes, and update the documentation when setup steps, features, or behavior change.
+
 ## Current Limitations
 
 - **Supported gestures:** Recognition is limited to the classes supported by the bundled gesture-recognition model.
