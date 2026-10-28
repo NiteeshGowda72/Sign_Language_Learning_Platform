@@ -257,6 +257,10 @@ Contributions that improve the platform are welcome. Before proposing a change, 
 
 Keep changes focused and consistent with the existing project structure. Test affected functionality before submitting changes, and update the documentation when setup steps, features, or behavior change.
 
+## Accessibility and Inclusive Design
+
+The platform aims to support communication and sign-language learning through technology. Its sign-recognition workflow is designed to help users explore gesture-based interaction, while speech and text features support the goal of making communication more accessible. Recognition results may vary depending on lighting, camera quality, and gesture execution.
+
 ## Current Limitations
 
 - **Supported gestures:** Recognition is limited to the classes supported by the bundled gesture-recognition model.
