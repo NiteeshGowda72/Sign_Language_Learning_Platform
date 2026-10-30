@@ -261,6 +261,10 @@ Keep changes focused and consistent with the existing project structure. Test af
 
 The platform aims to support communication and sign-language learning through technology. Its sign-recognition workflow is designed to help users explore gesture-based interaction, while speech and text features support the goal of making communication more accessible. Recognition results may vary depending on lighting, camera quality, and gesture execution.
 
+## Model Performance Considerations
+
+The reliability of sign recognition depends on factors such as camera quality, lighting conditions, hand positioning, gesture execution, and variations between users. Consistent testing under different conditions is important when evaluating recognition behavior. Future improvements can focus on improving recognition robustness and maintaining responsive real-time inference.
+
 ## Current Limitations
 
 - **Supported gestures:** Recognition is limited to the classes supported by the bundled gesture-recognition model.
